@@ -1381,7 +1381,24 @@ function deleteCar(id){
 /* =========================
    START
 ========================= */
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
+    authDomain: "n1center.firebaseapp.com",
+    projectId: "n1center",
+    storageBucket: "n1center.firebasestorage.app",
+    messagingSenderId: "163249895962",
+    appId: "1:163249895962:web:ec9204591db778c196efa3",
+    measurementId: "G-CMSX1LSG5N"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 showCars();
 </script>
+
+
 </body>
 </html>
