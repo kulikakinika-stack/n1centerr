@@ -1379,10 +1379,13 @@ function deleteCar(id){
     showAdminCars();
 }
 /* =========================
-   START
+   START & FIREBASE
 ========================= */
+</script>
+
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
@@ -1396,9 +1399,67 @@ function deleteCar(id){
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
-showCars();
-</script>
 
+  function loadCarsFromFirestore() {
+    db.collection("cars").onSnapshot((snapshot) => {
+      cars = [];
+      snapshot.forEach((doc) => {
+        cars.push({ id: doc.id, ...doc.data() });
+      });
+      showCars();
+      showAdminCars();
+    }, (error) => {
+      console.error("Firebase қатесі:", error);
+    });
+  }
+
+  saveCars = function() {};
+
+  addCar = function() {
+    const files = document.getElementById("imageFiles").files;
+    const brand = document.getElementById("brand").value.trim();
+    const year = document.getElementById("carYear").value;
+    const engine = document.getElementById("engine").value;
+    const gearbox = document.getElementById("gearbox").value;
+    const drive = document.getElementById("drive").value;
+    const mileage = document.getElementById("mileage").value;
+    const price = document.getElementById("price").value;
+    const label = document.getElementById("label").value;
+    const description = document.getElementById("description").value.trim();
+
+    if(!brand || !price || files.length === 0) {
+      alert("Марка, баға және кем дегенде 1 фото таңдаңыз!");
+      return;
+    }
+
+    const photos = [];
+    let loaded = 0;
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function(e){
+        photos.push(e.target.result);
+        loaded++;
+        if(loaded === files.length){
+          const newCar = { brand, year, engine, gearbox, drive, mileage, price, label, description, photos };
+          db.collection("cars").add(newCar).then(() => {
+            clearForm();
+            alert("🔥 Көлік Firebase базасына сәтті сақталды!");
+          }).catch(err => alert("Қате: " + err.message));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  deleteCar = function(id) {
+    if(!confirm("Бұл көлікті өшіру керек пе?")) return;
+    db.collection("cars").doc(String(id)).delete().then(() => {
+      alert("🗑️ Көлік өшірілді!");
+    }).catch(err => alert("Өшіру қатесі: " + err.message));
+  };
+
+  loadCarsFromFirestore();
+</script>
 
 </body>
 </html>
