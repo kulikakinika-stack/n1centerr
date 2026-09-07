@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="N1 CENTER — Алматыдағы автокөліктер. Сапалы автомобильдер, ашық баға және WhatsApp байланысы.">
 <title>N1 CENTER | Premium Auto</title>
 <style>
 *{
@@ -29,7 +30,7 @@ header{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    background:rgba(8,8,8,.82);
+    background:rgba(8,8,8,.88);
     backdrop-filter:blur(18px);
     border-bottom:1px solid rgba(255,255,255,.08);
 }
@@ -53,10 +54,6 @@ nav a{
 nav a:hover{
     color:#fff;
 }
-.header-buttons{
-    display:flex;
-    gap:10px;
-}
 .admin-btn{
     border:1px solid #333;
     background:#151515;
@@ -65,10 +62,8 @@ nav a:hover{
     border-radius:9px;
     cursor:pointer;
 }
-@media(max-width:750px){
-    nav{
-        display:none;
-    }
+.admin-btn:hover{
+    background:#222;
 }
 /* ================= HERO ================= */
 .hero{
@@ -84,11 +79,7 @@ nav a:hover{
             rgba(255,30,30,.22),
             transparent 35%
         ),
-        linear-gradient(
-            110deg,
-            #050505,
-            #111
-        );
+        linear-gradient(110deg,#050505,#111);
 }
 .hero-content{
     max-width:720px;
@@ -123,6 +114,7 @@ nav a:hover{
     flex-wrap:wrap;
 }
 .primary-btn{
+    display:inline-block;
     padding:15px 25px;
     border:0;
     border-radius:10px;
@@ -133,6 +125,7 @@ nav a:hover{
     cursor:pointer;
     box-shadow:0 10px 30px rgba(255,30,30,.25);
     transition:.3s;
+    text-decoration:none;
 }
 .primary-btn:hover{
     transform:translateY(-3px);
@@ -161,7 +154,6 @@ nav a:hover{
     grid-template-columns:repeat(3,1fr);
     gap:15px;
     padding:0 7% 70px;
-    background:#080808;
 }
 .stat{
     background:#101010;
@@ -177,27 +169,20 @@ nav a:hover{
 .stat span{
     color:#777;
 }
-@media(max-width:600px){
-    .stats{
-        grid-template-columns:1fr;
-    }
-}
-/* ================= CATALOG ================= */
+/* ================= SECTION ================= */
 .section{
     padding:80px 7%;
 }
 .section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
     margin-bottom:35px;
-}
-.section-head h2{
-    font-size:42px;
 }
 .section-head p{
     color:#777;
 }
+.section-head h2{
+    font-size:42px;
+}
+/* ================= FILTERS ================= */
 .filters{
     display:grid;
     grid-template-columns:2fr 1fr 1fr;
@@ -213,16 +198,10 @@ nav a:hover{
     border-radius:10px;
     outline:none;
 }
-@media(max-width:700px){
-    .filters{
-        grid-template-columns:1fr;
-    }
-}
-/* ================= CAR GRID ================= */
+/* ================= CARS ================= */
 .cars{
     display:grid;
-    grid-template-columns:
-        repeat(auto-fill,minmax(290px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
     gap:22px;
 }
 .car{
@@ -231,18 +210,17 @@ nav a:hover{
     border-radius:18px;
     overflow:hidden;
     transition:.35s;
-    position:relative;
 }
 .car:hover{
     transform:translateY(-7px);
     border-color:#383838;
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.4);
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
 }
 .car-photo{
     height:235px;
     position:relative;
     overflow:hidden;
+    cursor:pointer;
 }
 .car-photo img{
     width:100%;
@@ -303,6 +281,12 @@ nav a:hover{
     font-weight:900;
     margin:18px 0;
 }
+.description{
+    color:#777;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
 .whatsapp{
     display:block;
     text-align:center;
@@ -312,10 +296,6 @@ nav a:hover{
     text-decoration:none;
     border-radius:9px;
     font-weight:bold;
-    transition:.3s;
-}
-.whatsapp:hover{
-    transform:translateY(-2px);
 }
 /* ================= ABOUT ================= */
 .about{
@@ -327,7 +307,7 @@ nav a:hover{
 }
 .about h2{
     font-size:45px;
-    margin-bottom:20px;
+    margin:15px 0 20px;
 }
 .about p{
     color:#999;
@@ -353,11 +333,6 @@ nav a:hover{
 .about-box span{
     color:#777;
 }
-@media(max-width:700px){
-    .about{
-        grid-template-columns:1fr;
-    }
-}
 /* ================= CONTACT ================= */
 .contact{
     text-align:center;
@@ -376,12 +351,6 @@ nav a:hover{
     color:#888;
     margin-bottom:25px;
 }
-.contact-buttons{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-}
 /* ================= FOOTER ================= */
 footer{
     padding:30px 7%;
@@ -390,25 +359,19 @@ footer{
     display:flex;
     justify-content:space-between;
 }
-@media(max-width:600px){
-    footer{
-        flex-direction:column;
-        gap:10px;
-    }
-}
-/* ================= ADMIN MODAL ================= */
+/* ================= MODAL ================= */
 .modal{
     display:none;
     position:fixed;
     inset:0;
     z-index:2000;
-    background:rgba(0,0,0,.82);
+    background:rgba(0,0,0,.88);
     backdrop-filter:blur(10px);
     overflow:auto;
     padding:30px 15px;
 }
 .admin{
-    max-width:760px;
+    max-width:800px;
     margin:auto;
     background:#111;
     border:1px solid #292929;
@@ -462,8 +425,7 @@ footer{
 }
 .photo-preview{
     display:grid;
-    grid-template-columns:
-        repeat(5,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:8px;
     margin-top:12px;
 }
@@ -484,6 +446,9 @@ footer{
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
+}
+.publish:disabled{
+    opacity:.6;
 }
 .admin-list{
     margin-top:35px;
@@ -516,17 +481,29 @@ footer{
     border-radius:7px;
     cursor:pointer;
 }
-@media(max-width:600px){
-    .form{
-        grid-template-columns:1fr;
-    }
-    .full{
-        grid-column:auto;
-    }
-    .photo-preview{
-        grid-template-columns:
-            repeat(3,1fr);
-    }
+/* ================= IMAGE VIEWER ================= */
+.image-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    background:rgba(0,0,0,.96);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.image-modal img{
+    max-width:95%;
+    max-height:90vh;
+    object-fit:contain;
+    border-radius:10px;
+}
+.image-close{
+    position:absolute;
+    top:15px;
+    right:25px;
+    font-size:40px;
+    cursor:pointer;
 }
 /* ================= EMPTY ================= */
 .empty{
@@ -534,6 +511,43 @@ footer{
     text-align:center;
     padding:70px 20px;
     color:#666;
+}
+/* ================= MOBILE ================= */
+@media(max-width:750px){
+    nav{
+        display:none;
+    }
+    header{
+        padding:15px 5%;
+    }
+    .logo{
+        font-size:22px;
+    }
+    .stats{
+        grid-template-columns:1fr;
+    }
+    .filters{
+        grid-template-columns:1fr;
+    }
+    .about{
+        grid-template-columns:1fr;
+    }
+    .about h2{
+        font-size:35px;
+    }
+    .form{
+        grid-template-columns:1fr;
+    }
+    .full{
+        grid-column:auto;
+    }
+    .photo-preview{
+        grid-template-columns:repeat(3,1fr);
+    }
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
 }
 </style>
 </head>
@@ -544,17 +558,15 @@ footer{
         N1 <span>CENTER</span>
     </div>
     <nav>
-        <a href="#catalog">Автомобили</a>
+        <a href="#catalog">Автомобильдер</a>
         <a href="#about">О нас</a>
         <a href="#contact">Контакты</a>
     </nav>
-    <div class="header-buttons">
-        <button
-            class="admin-btn"
-            onclick="openAdmin()">
-            🔐 Админ
-        </button>
-    </div>
+    <button
+        class="admin-btn"
+        onclick="openAdmin()">
+        🔐 Админ
+    </button>
 </header>
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -592,16 +604,28 @@ footer{
 <!-- ================= STATS ================= -->
 <section class="stats">
     <div class="stat">
-        <strong id="statCars">0+</strong>
-        <span>Автокөлік</span>
+        <strong id="statCars">
+            0+
+        </strong>
+        <span>
+            Автокөлік
+        </span>
     </div>
     <div class="stat">
-        <strong>24/7</strong>
-        <span>Клиенттермен байланыс</span>
+        <strong>
+            24/7
+        </strong>
+        <span>
+            Клиенттермен байланыс
+        </span>
     </div>
     <div class="stat">
-        <strong>Almaty</strong>
-        <span>Біздің орналасқан жеріміз</span>
+        <strong>
+            Almaty
+        </strong>
+        <span>
+            Біздің орналасқан жеріміз
+        </span>
     </div>
 </section>
 <!-- ================= CATALOG ================= -->
@@ -609,12 +633,12 @@ footer{
     class="section"
     id="catalog">
     <div class="section-head">
-        <div>
-            <p>БІЗДІҢ АВТОПАРК</p>
-            <h2>
-                Автомобильдер
-            </h2>
-        </div>
+        <p>
+            БІЗДІҢ АВТОПАРК
+        </p>
+        <h2>
+            Автомобильдер
+        </h2>
     </div>
     <div class="filters">
         <input
@@ -667,6 +691,9 @@ footer{
     <div
         class="cars"
         id="cars">
+        <div class="empty">
+            🚘 Автомобильдер жүктелуде...
+        </div>
     </div>
 </section>
 <!-- ================= ABOUT ================= -->
@@ -674,7 +701,9 @@ footer{
     class="section about"
     id="about">
     <div>
-        <p>WHY N1 CENTER</p>
+        <p>
+            WHY N1 CENTER
+        </p>
         <h2>
             Көлік таңдау —
             оңай болуы керек.
@@ -724,14 +753,12 @@ footer{
     <p>
         Бізге WhatsApp арқылы жазыңыз.
     </p>
-    <div class="contact-buttons">
-        <a
-            href="https://wa.me/77072351858"
-            target="_blank"
-            class="primary-btn">
-            🟢 WhatsApp-қа жазу
-        </a>
-    </div>
+    <a
+        href="https://wa.me/77072351858"
+        target="_blank"
+        class="primary-btn">
+        🟢 WhatsApp-қа жазу
+    </a>
 </section>
 <!-- ================= FOOTER ================= -->
 <footer>
@@ -853,12 +880,12 @@ footer{
                 </label>
                 <textarea
                     id="description"
-                    placeholder="Көлік туралы ақпарат...">
-                </textarea>
+                    placeholder="Көлік туралы ақпарат..."></textarea>
             </div>
         </div>
         <button
             class="publish"
+            id="publishButton"
             onclick="addCar()">
             🚀 КӨЛІКТІ ЖАРИЯЛАУ
         </button>
@@ -866,210 +893,468 @@ footer{
             <h3>
                 Сайттағы көліктер
             </h3>
-            <div
-                id="adminCars">
-            </div>
+            <div id="adminCars"></div>
         </div>
     </div>
 </div>
-
-<!-- Firebase SDK кітапханалары -->
+<!-- IMAGE MODAL -->
+<div
+    class="image-modal"
+    id="imageModal"
+    onclick="closeImage()">
+    <span class="image-close">
+        ×
+    </span>
+    <img
+        id="bigImage"
+        src=""
+        onclick="event.stopPropagation()">
+</div>
+<!-- ================= FIREBASE ================= -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <script>
-  // =========================
-  // SETTINGS
-  // =========================
-  const WHATSAPP = "77072351858";
-  const ADMIN_PASSWORD = "1234";
-
-  let cars = [];
-
-  // =========================
-  // FIREBASE CONFIG & SETUP
-  // =========================
-  const firebaseConfig = {
-    apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
-    authDomain: "n1center.firebaseapp.com",
-    projectId: "n1center",
-    storageBucket: "n1center.firebasestorage.app",
-    messagingSenderId: "163249895962",
-    appId: "1:163249895962:web:ec9204591db778c196efa3",
-    measurementId: "G-CMSX1LSG5N"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  // Базадан көліктерді авто-оқу
-  function loadCarsFromFirestore() {
-    db.collection("cars").onSnapshot((snapshot) => {
-      cars = [];
-      snapshot.forEach((doc) => {
-        cars.push({ id: doc.id, ...doc.data() });
-      });
-      showCars();
-      if(document.getElementById("adminModal").style.display === "block") {
-        showAdminCars();
-      }
-    }, (error) => {
-      console.error("Firebase қатесі:", error);
-    });
-  }
-
-  // =========================
-  // SHOW CARS (CATALOG)
-  // =========================
-  function showCars(){
-    const container = document.getElementById("cars");
-    const search = document.getElementById("search").value.toLowerCase();
-    const year = document.getElementById("year").value;
-    const sort = document.getElementById("sort").value;
-    
-    let filtered = cars.filter(car => {
-      const name = (car.brand || "").toLowerCase();
-      const matchName = name.includes(search);
-      const matchYear = year === "" || String(car.year) === year;
-      return matchName && matchYear;
-    });
-
+/* =========================
+   SETTINGS
+========================= */
+const WHATSAPP = "77072351858";
+/* АДМИН ПАРОЛЬ */
+const ADMIN_PASSWORD = "7777";
+let cars = [];
+/* =========================
+   FIREBASE CONFIG
+========================= */
+const firebaseConfig = {
+    apiKey:
+        "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
+    authDomain:
+        "n1center.firebaseapp.com",
+    projectId:
+        "n1center",
+    storageBucket:
+        "n1center.firebasestorage.app",
+    messagingSenderId:
+        "163249895962",
+    appId:
+        "1:163249895962:web:ec9204591db778c196efa3",
+    measurementId:
+        "G-CMSX1LSG5N"
+};
+firebase.initializeApp(firebaseConfig);
+const db =
+    firebase.firestore();
+const storage =
+    firebase.storage();
+/* =========================
+   LOAD CARS
+========================= */
+function loadCars(){
+    db.collection("cars")
+    .orderBy("createdAt","desc")
+    .onSnapshot(
+        snapshot => {
+            cars = [];
+            snapshot.forEach(doc => {
+                cars.push({
+                    id:doc.id,
+                    ...doc.data()
+                });
+            });
+            showCars();
+            showAdminCars();
+        },
+        error => {
+            console.error(error);
+            document.getElementById("cars").innerHTML = `
+                <div class="empty">
+                    <div style="font-size:55px">
+                        ⚠️
+                    </div>
+                    <h3>
+                        Firebase қатесі
+                    </h3>
+                    <p style="margin-top:10px">
+                        Firebase баптауларын тексеріңіз.
+                    </p>
+                </div>
+            `;
+        }
+    );
+}
+/* =========================
+   SHOW CARS
+========================= */
+function showCars(){
+    const container =
+        document.getElementById("cars");
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+    const year =
+        document.getElementById("year").value;
+    const sort =
+        document.getElementById("sort").value;
+    let filtered =
+        cars.filter(car => {
+            const name =
+                String(car.brand || "")
+                .toLowerCase();
+            const matchName =
+                name.includes(search);
+            const matchYear =
+                year === "" ||
+                String(car.year) === year;
+            return matchName && matchYear;
+        });
     if(sort === "cheap"){
-      filtered.sort((a,b) => priceNumber(a.price) - priceNumber(b.price));
+        filtered.sort(
+            (a,b) =>
+            priceNumber(a.price) -
+            priceNumber(b.price)
+        );
     }
     if(sort === "expensive"){
-      filtered.sort((a,b) => priceNumber(b.price) - priceNumber(a.price));
+        filtered.sort(
+            (a,b) =>
+            priceNumber(b.price) -
+            priceNumber(a.price)
+        );
     }
     if(sort === "new"){
-      filtered.sort((a,b) => Number(b.year) - Number(a.year));
+        filtered.sort(
+            (a,b) =>
+            Number(b.year || 0) -
+            Number(a.year || 0)
+        );
     }
-
     container.innerHTML = "";
     if(filtered.length === 0){
-      container.innerHTML = `
-        <div class="empty">
-            <div style="font-size:55px; margin-bottom:15px;">🚘</div>
-            <h3>Қазір көлік табылмады</h3>
-            <p style="margin-top:8px;">Іздеу параметрін өзгертіп көріңіз.</p>
-        </div>
-      `;
+        container.innerHTML = `
+            <div class="empty">
+                <div style="font-size:55px">
+                    🚘
+                </div>
+                <h3>
+                    Қазір көлік жоқ
+                </h3>
+                <p style="margin-top:8px">
+                    Админ панельден бірінші көлікті қосыңыз.
+                </p>
+            </div>
+        `;
     }
-
     filtered.forEach(car => {
-      const photo = car.photos && car.photos.length ? car.photos[0] : "";
-      const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
-      container.innerHTML += `
-        <div class="car">
-            <div class="car-photo">
-                <img src="${photo}" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
-                ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
-                <button class="favorite" onclick="toggleFavorite(this)">♡</button>
-            </div>
-            <div class="car-info">
-                <div class="car-title">${car.brand}</div>
-                <div class="car-subtitle">${car.year || ""} • Premium Auto</div>
-                <div class="car-details">
-                    <div>⚙️ ${car.engine || "-"}</div>
-                    <div>🔧 ${car.gearbox || "-"}</div>
-                    <div>🚗 ${car.drive || "-"}</div>
-                    <div>🛣️ ${car.mileage || "-"}</div>
+        const photo =
+            car.photos &&
+            car.photos.length
+            ?
+            car.photos[0]
+            :
+            "https://via.placeholder.com/700x450?text=N1+CENTER";
+        const message =
+            encodeURIComponent(
+                "Сәлеметсіз бе! " +
+                car.brand +
+                " көлігі туралы ақпарат алғым келеді."
+            );
+        container.innerHTML += `
+            <div class="car">
+                <div
+                    class="car-photo"
+                    onclick="openImage('${photo}')">
+                    <img
+                        src="${photo}"
+                        loading="lazy"
+                        onerror="
+                            this.src='https://via.placeholder.com/700x450?text=N1+CENTER'
+                        ">
+                    ${
+                        car.label
+                        ?
+                        `<div class="car-label">
+                            ${car.label}
+                        </div>`
+                        :
+                        ""
+                    }
+                    <button
+                        class="favorite"
+                        onclick="event.stopPropagation();toggleFavorite(this)">
+                        ♡
+                    </button>
                 </div>
-                <div class="price">${car.price}</div>
-                <div style="color:#777; font-size:14px; line-height:1.5; margin-bottom:15px;">
-                    ${car.description || ""}
+                <div class="car-info">
+                    <div class="car-title">
+                        ${car.brand || ""}
+                    </div>
+                    <div class="car-subtitle">
+                        ${car.year || ""} • Premium Auto
+                    </div>
+                    <div class="car-details">
+                        <div>
+                            ⚙️ ${car.engine || "-"}
+                        </div>
+                        <div>
+                            🔧 ${car.gearbox || "-"}
+                        </div>
+                        <div>
+                            🚗 ${car.drive || "-"}
+                        </div>
+                        <div>
+                            🛣️ ${car.mileage || "-"}
+                        </div>
+                    </div>
+                    <div class="price">
+                        ${car.price || ""}
+                    </div>
+                    <div class="description">
+                        ${car.description || ""}
+                    </div>
+                    <a
+                        class="whatsapp"
+                        href="https://wa.me/${WHATSAPP}?text=${message}"
+                        target="_blank">
+                        🟢 WhatsApp арқылы хабарласу
+                    </a>
                 </div>
-                <a class="whatsapp" href="https://wa.me/${WHATSAPP}?text=${message}" target="_blank">
-                    🟢 WhatsApp арқылы хабарласу
-                </a>
             </div>
-        </div>
-      `;
+        `;
     });
-    document.getElementById("statCars").innerText = cars.length + "+";
-  }
-
-  function priceNumber(price){
-    return Number(String(price).replace(/\D/g,"")) || 0;
-  }
-
-  function toggleFavorite(button){
+    document.getElementById("statCars")
+        .innerText =
+        cars.length + "+";
+}
+/* =========================
+   PRICE
+========================= */
+function priceNumber(price){
+    return Number(
+        String(price)
+        .replace(/\D/g,"")
+    ) || 0;
+}
+/* =========================
+   FAVORITE
+========================= */
+function toggleFavorite(button){
     button.classList.toggle("active");
-    button.innerText = button.classList.contains("active") ? "♥" : "♡";
-  }
-
-  // =========================
-  // ADMIN PANEL
-  // =========================
-  function openAdmin(){
-    const password = prompt("🔐 Админ пароль:");
+    button.innerText =
+        button.classList.contains("active")
+        ? "♥"
+        : "♡";
+}
+/* =========================
+   ADMIN LOGIN
+========================= */
+function openAdmin(){
+    const password =
+        prompt("🔐 Админ пароль:");
     if(password === ADMIN_PASSWORD){
-      document.getElementById("adminModal").style.display = "block";
-      showAdminCars();
-    } else {
-      alert("❌ Пароль қате!");
+        document.getElementById(
+            "adminModal"
+        ).style.display = "block";
+        showAdminCars();
     }
-  }
-
-  function closeAdmin(){
-    document.getElementById("adminModal").style.display = "none";
-  }
-
-  function previewPhotos(){
-    const files = document.getElementById("imageFiles").files;
-    const preview = document.getElementById("photoPreview");
+    else{
+        alert("❌ Пароль қате!");
+    }
+}
+function closeAdmin(){
+    document.getElementById(
+        "adminModal"
+    ).style.display = "none";
+}
+/* =========================
+   PHOTO PREVIEW
+========================= */
+function previewPhotos(){
+    const input =
+        document.getElementById("imageFiles");
+    const files =
+        input.files;
+    const preview =
+        document.getElementById("photoPreview");
     preview.innerHTML = "";
     if(files.length > 10){
-      alert("Максимум 10 фото!");
-      document.getElementById("imageFiles").value = "";
-      return;
+        alert(
+            "Максимум 10 фото!"
+        );
+        input.value = "";
+        return;
     }
     Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = function(e){
-        preview.innerHTML += `<img src="${e.target.result}">`;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  // Көлікті Firebase-ке қосу
-  function addCar(){
-    const files = document.getElementById("imageFiles").files;
-    const brand = document.getElementById("brand").value.trim();
-    const year = document.getElementById("carYear").value;
-    const engine = document.getElementById("engine").value;
-    const gearbox = document.getElementById("gearbox").value;
-    const drive = document.getElementById("drive").value;
-    const mileage = document.getElementById("mileage").value;
-    const price = document.getElementById("price").value;
-    const label = document.getElementById("label").value;
-    const description = document.getElementById("description").value.trim();
-
-    if(!brand || !price || files.length === 0) {
-      alert("Марка, баға және кем дегенде 1 фото таңдаңыз!");
-      return;
-    }
-
-    const photos = [];
-    let loaded = 0;
-    Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = function(e){
-        photos.push(e.target.result);
-        loaded++;
-        if(loaded === files.length){
-          const newCar = { brand, year, engine, gearbox, drive, mileage, price, label, description, photos };
-          db.collection("cars").add(newCar).then(() => {
-            clearForm();
-            alert("🔥 Көлік Firebase базасына сәтті сақталды!");
-          }).catch(err => alert("Қате: " + err.message));
+        if(!file.type.startsWith("image/")){
+            return;
         }
-      };
-      reader.readAsDataURL(file);
+        const reader =
+            new FileReader();
+        reader.onload =
+            function(e){
+                preview.innerHTML += `
+                    <img src="${e.target.result}">
+                `;
+            };
+        reader.readAsDataURL(file);
     });
-  }
-
-  function clearForm(){
+}
+/* =========================
+   ADD CAR
+========================= */
+async function addCar(){
+    const button =
+        document.getElementById(
+            "publishButton"
+        );
+    const files =
+        document.getElementById(
+            "imageFiles"
+        ).files;
+    const brand =
+        document.getElementById(
+            "brand"
+        ).value.trim();
+    const year =
+        document.getElementById(
+            "carYear"
+        ).value.trim();
+    const engine =
+        document.getElementById(
+            "engine"
+        ).value.trim();
+    const gearbox =
+        document.getElementById(
+            "gearbox"
+        ).value.trim();
+    const drive =
+        document.getElementById(
+            "drive"
+        ).value.trim();
+    const mileage =
+        document.getElementById(
+            "mileage"
+        ).value.trim();
+    const price =
+        document.getElementById(
+            "price"
+        ).value.trim();
+    const label =
+        document.getElementById(
+            "label"
+        ).value.trim();
+    const description =
+        document.getElementById(
+            "description"
+        ).value.trim();
+    if(!brand){
+        alert("Марка / модель жазыңыз!");
+        return;
+    }
+    if(!price){
+        alert("Бағасын жазыңыз!");
+        return;
+    }
+    if(files.length === 0){
+        alert(
+            "Кем дегенде 1 фото таңдаңыз!"
+        );
+        return;
+    }
+    if(files.length > 10){
+        alert(
+            "Максимум 10 фото!"
+        );
+        return;
+    }
+    button.disabled = true;
+    try{
+        const photoURLs = [];
+        /* ФОТОЛАРДЫ STORAGE-КЕ ЖҮКТЕУ */
+        for(
+            let i = 0;
+            i < files.length;
+            i++
+        ){
+            const file =
+                files[i];
+            button.innerText =
+                "⏳ Фото " +
+                (i + 1) +
+                "/" +
+                files.length +
+                " жүктелуде...";
+            const extension =
+                file.name
+                .split(".")
+                .pop();
+            const fileName =
+                Date.now() +
+                "_" +
+                Math.random()
+                .toString(36)
+                .substring(2) +
+                "_" +
+                i +
+                "." +
+                extension;
+            const storageRef =
+                storage
+                .ref()
+                .child(
+                    "cars/" +
+                    fileName
+                );
+            await storageRef.put(file);
+            const downloadURL =
+                await storageRef
+                .getDownloadURL();
+            photoURLs.push(
+                downloadURL
+            );
+        }
+        /* FIRESTORE */
+        button.innerText =
+            "⏳ Сақталуда...";
+        await db
+        .collection("cars")
+        .add({
+            brand:brand,
+            year:year,
+            engine:engine,
+            gearbox:gearbox,
+            drive:drive,
+            mileage:mileage,
+            price:price,
+            label:label,
+            description:description,
+            photos:photoURLs,
+            createdAt:
+                firebase.firestore
+                .FieldValue
+                .serverTimestamp()
+        });
+        clearForm();
+        alert(
+            "🔥 Көлік сайтқа сәтті жарияланды!"
+        );
+    }
+    catch(error){
+        console.error(error);
+        alert(
+            "❌ Қате:\n\n" +
+            error.message
+        );
+    }
+    button.disabled = false;
+    button.innerText =
+        "🚀 КӨЛІКТІ ЖАРИЯЛАУ";
+}
+/* =========================
+   CLEAR
+========================= */
+function clearForm(){
     document.getElementById("brand").value = "";
     document.getElementById("carYear").value = "";
     document.getElementById("engine").value = "";
@@ -1081,40 +1366,134 @@ footer{
     document.getElementById("description").value = "";
     document.getElementById("imageFiles").value = "";
     document.getElementById("photoPreview").innerHTML = "";
-  }
-
-  function showAdminCars(){
-    const container = document.getElementById("adminCars");
+}
+/* =========================
+   ADMIN LIST
+========================= */
+function showAdminCars(){
+    const container =
+        document.getElementById(
+            "adminCars"
+        );
     container.innerHTML = "";
     if(cars.length === 0){
-      container.innerHTML = `<p style="color:#666; margin-top:15px;">Әзірге көлік жоқ.</p>`;
-      return;
+        container.innerHTML = `
+            <p style="
+                color:#666;
+                margin-top:15px;
+            ">
+                Әзірге көлік жоқ.
+            </p>
+        `;
+        return;
     }
     cars.forEach(car => {
-      const image = car.photos && car.photos.length ? car.photos[0] : "";
-      container.innerHTML += `
-        <div class="admin-item">
-            <img src="${image}">
-            <div class="admin-item-info">
-                <b>${car.brand}</b><br>
-                <span style="color:#777;">${car.year || ""} • ${car.price}</span>
+        const image =
+            car.photos &&
+            car.photos.length
+            ?
+            car.photos[0]
+            :
+            "";
+        container.innerHTML += `
+            <div class="admin-item">
+                <img
+                    src="${image}"
+                    onerror="
+                        this.src='https://via.placeholder.com/100x70?text=CAR'
+                    ">
+                <div class="admin-item-info">
+                    <b>
+                        ${car.brand || ""}
+                    </b>
+                    <br>
+                    <span style="color:#777">
+                        ${car.year || ""}
+                        •
+                        ${car.price || ""}
+                    </span>
+                </div>
+                <button
+                    class="delete"
+                    onclick="deleteCar('${car.id}')">
+                    🗑️
+                </button>
             </div>
-            <button class="delete" onclick="deleteCar('${car.id}')">🗑️</button>
-        </div>
-      `;
+        `;
     });
-  }
-
-  // Көлікті Firebase-тен өшіру
-  function deleteCar(id){
-    if(!confirm("Бұл көлікті өшіру керек пе?")) return;
-    db.collection("cars").doc(String(id)).delete().then(() => {
-      alert("🗑️ Көлік өшірілді!");
-    }).catch(err => alert("Өшіру қатесі: " + err.message));
-  }
-
-  // Бағдарлама іске қосылғанда базадан деректерді алу
-  loadCarsFromFirestore();
+}
+/* =========================
+   DELETE
+========================= */
+async function deleteCar(id){
+    if(!confirm(
+        "Бұл көлікті толық өшіру керек пе?"
+    )){
+        return;
+    }
+    try{
+        const car =
+            cars.find(
+                item => item.id === id
+            );
+        /* СТОРАЖДАҒЫ ФОТОЛАРДЫ ӨШІРУ */
+        if(car && car.photos){
+            for(
+                const photoURL
+                of car.photos
+            ){
+                try{
+                    const photoRef =
+                        storage
+                        .refFromURL(
+                            photoURL
+                        );
+                    await photoRef.delete();
+                }
+                catch(e){
+                    console.log(
+                        "Фото табылмады немесе өшірілмеді"
+                    );
+                }
+            }
+        }
+        /* FIRESTORE */
+        await db
+        .collection("cars")
+        .doc(id)
+        .delete();
+        alert(
+            "🗑️ Көлік өшірілді!"
+        );
+    }
+    catch(error){
+        console.error(error);
+        alert(
+            "❌ Өшіру қатесі:\n\n" +
+            error.message
+        );
+    }
+}
+/* =========================
+   IMAGE VIEW
+========================= */
+function openImage(url){
+    document.getElementById(
+        "bigImage"
+    ).src = url;
+    document.getElementById(
+        "imageModal"
+    ).style.display = "flex";
+}
+function closeImage(){
+    document.getElementById(
+        "imageModal"
+    ).style.display = "none";
+}
+/* =========================
+   START
+========================= */
+loadCars();
 </script>
 </body>
 </html>
