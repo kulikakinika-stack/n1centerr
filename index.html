@@ -140,6 +140,13 @@ nav a:hover{
     padding:25px;
     border-radius:15px;
     border:1px solid #1d1d1d;
+    text-decoration:none;
+    color:inherit;
+    display:block;
+    transition:.3s;
+}
+.stat:hover{
+    border-color:#ff2929;
 }
 .stat strong{
     display:block;
@@ -197,6 +204,7 @@ nav a:hover{
     position:relative;
     overflow:hidden;
     cursor:pointer;
+    background:#000;
 }
 .car-photo img{
     width:100%;
@@ -204,8 +212,52 @@ nav a:hover{
     object-fit:cover;
     transition:.5s;
 }
-.car:hover .car-photo img{
-    transform:scale(1.06);
+.slide-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.6);
+    color:white;
+    border:none;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:5;
+    opacity:0.7;
+    transition:.2s;
+}
+.slide-btn:hover{
+    opacity:1;
+    background:#ff2929;
+}
+.prev-btn{ left:10px; }
+.next-btn{ right:10px; }
+.photo-dots{
+    position:absolute;
+    bottom:10px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:center;
+    gap:5px;
+    z-index:5;
+}
+.dot{
+    width:6px;
+    height:6px;
+    background:rgba(255,255,255,0.4);
+    border-radius:50%;
+    transition:.3s;
+}
+.dot.active{
+    background:#ff2929;
+    width:16px;
+    border-radius:3px;
 }
 .car-label{
     position:absolute;
@@ -216,6 +268,7 @@ nav a:hover{
     border-radius:7px;
     font-size:12px;
     font-weight:bold;
+    z-index:5;
 }
 .favorite{
     position:absolute;
@@ -229,6 +282,7 @@ nav a:hover{
     color:white;
     cursor:pointer;
     font-size:19px;
+    z-index:5;
 }
 .favorite.active{
     color:#ff3030;
@@ -319,6 +373,13 @@ nav a:hover{
 .contact p{
     color:#888;
     margin-bottom:25px;
+}
+.contact-links{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 footer{
     padding:30px 7%;
@@ -518,7 +579,9 @@ footer{
 <section class="stats">
     <div class="stat"><strong id="statCars">0+</strong><span>Автокөлік</span></div>
     <div class="stat"><strong>24/7</strong><span>Клиенттермен байланыс</span></div>
-    <div class="stat"><strong>Almaty</strong><span>Біздің орналасқан жеріміз</span></div>
+    <a href="https://2gis.kz/almaty/geo/70000001089870702" target="_blank" class="stat">
+        <strong>📍 2GIS</strong><span>Алматы, мекенжайды көру</span>
+    </a>
 </section>
 
 <section class="section" id="catalog">
@@ -530,9 +593,7 @@ footer{
         <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
         <select id="year" onchange="showCars()">
             <option value="">Барлық жыл</option>
-            <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
-            <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
-            <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+            <!-- Скрипт арқылы 1990-нан қазіргі жылға дейін толық қосылады -->
         </select>
         <select id="sort" onchange="showCars()">
             <option value="">Сұрыптау</option>
@@ -562,8 +623,11 @@ footer{
 
 <section class="section contact" id="contact">
     <h2>Көлік ұнады ма?</h2>
-    <p>Бізге WhatsApp арқылы жазыңыз.</p>
-    <a href="https://wa.me/77072351858" target="_blank" class="primary-btn">🟢 WhatsApp-қа жазу</a>
+    <p>Бізге WhatsApp арқылы жазыңыз немесе 2GIS арқылы келіңіз.</p>
+    <div class="contact-links">
+        <a href="https://wa.me/77072351858" target="_blank" class="primary-btn">🟢 WhatsApp-қа жазу</a>
+        <a href="https://2GIS.kz/almaty/geo/70000001089870702" target="_blank" class="secondary-btn">📍 2GIS картасы</a>
+    </div>
 </section>
 
 <footer>
@@ -590,7 +654,7 @@ footer{
                 <label>📸 Фото — 1-10 дана</label>
                 <div class="photo-input">
                     <input id="imageFiles" type="file" accept="image/*" multiple onchange="previewPhotos()">
-                    <p style="color:#777; margin-top:10px;">Телефоннан немесе компьютерден фото таңдаңыз</p>
+                    <p style="color:#777; margin-top:10px;">Телефоннан немесе компьютерден 10-ға дейін фото таңдаңыз</p>
                 </div>
                 <div class="photo-preview" id="photoPreview"></div>
             </div>
@@ -617,6 +681,21 @@ const ADMIN_PASSWORD = "7777";
 const IMGBB_API_KEY = "cf5ecae0db6b81363d9b8aca69a0c525";
 
 let cars = [];
+// Әр көлік үшін ағымдағы көрсетіліп тұрған фото индексін сақтау
+const currentPhotoIndexes = {};
+
+// Жылдарды автоматты түрде генерациялау (1990 - 2026)
+function generateYears(){
+    const yearSelect = document.getElementById("year");
+    const currentYear = new Date().getFullYear();
+    for(let y = currentYear; y >= 1990; y--){
+        const opt = document.createElement("option");
+        opt.value = y;
+        opt.innerText = y;
+        yearSelect.appendChild(opt);
+    }
+}
+generateYears();
 
 const firebaseConfig = {
     apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
@@ -689,15 +768,37 @@ function showCars(){
     }
 
     filtered.forEach(car => {
-        const photo = car.photos && car.photos.length ? car.photos[0] : "https://via.placeholder.com/700x450?text=N1+CENTER";
+        if(currentPhotoIndexes[car.id] === undefined) {
+            currentPhotoIndexes[car.id] = 0;
+        }
+        let photoIndex = currentPhotoIndexes[car.id];
+        const photos = car.photos && car.photos.length ? car.photos : ["https://via.placeholder.com/700x450?text=N1+CENTER"];
+        if(photoIndex >= photos.length) photoIndex = 0;
+        const currentPhoto = photos[photoIndex];
+
         const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
         
+        let dotsHtml = "";
+        if(photos.length > 1){
+            dotsHtml = `<div class="photo-dots">`;
+            photos.forEach((_, idx) => {
+                dotsHtml += `<span class="dot ${idx === photoIndex ? 'active' : ''}"></span>`;
+            });
+            dotsHtml += `</div>`;
+        }
+
         container.innerHTML += `
             <div class="car">
-                <div class="car-photo" onclick="openImage('${photo}')">
-                    <img src="${photo}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
+                <div class="car-photo" onclick="openImage('${currentPhoto}')">
+                    <img id="car-img-${car.id}" src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
                     ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
                     <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
+                    
+                    ${photos.length > 1 ? `
+                        <button class="slide-btn prev-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', -1)">❮</button>
+                        <button class="slide-btn next-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', 1)">❯</button>
+                        ${dotsHtml}
+                    ` : ""}
                 </div>
                 <div class="car-info">
                     <div class="car-title">${car.brand || ""}</div>
@@ -716,6 +817,19 @@ function showCars(){
         `;
     });
     document.getElementById("statCars").innerText = cars.length + "+";
+}
+
+function changePhoto(carId, direction){
+    const car = cars.find(c => c.id === carId);
+    if(!car || !car.photos || car.photos.length <= 1) return;
+    
+    let idx = currentPhotoIndexes[carId] || 0;
+    idx += direction;
+    if(idx < 0) idx = car.photos.length - 1;
+    if(idx >= car.photos.length) idx = 0;
+    
+    currentPhotoIndexes[carId] = idx;
+    showCars();
 }
 
 function priceNumber(price){
