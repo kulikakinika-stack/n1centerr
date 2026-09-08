@@ -36,15 +36,12 @@ header{
     font-size:28px;
     font-weight:900;
     letter-spacing:2px;
-    text-decoration:none;
-    color:white;
 }
 .logo span{
     color:#ff2b2b;
 }
 nav{
     display:flex;
-    align-items:center;
     gap:30px;
 }
 nav a{
@@ -54,25 +51,6 @@ nav a{
 }
 nav a:hover{
     color:#fff;
-}
-.favorites-link{
-    position:relative;
-    color:#fff !important;
-    background:#161616;
-    border:1px solid #333;
-    padding:8px 14px;
-    border-radius:8px;
-    display:flex;
-    align-items:center;
-    gap:6px;
-}
-.favorites-link span#favCount{
-    background:#ff2929;
-    color:white;
-    font-size:11px;
-    padding:2px 6px;
-    border-radius:20px;
-    font-weight:bold;
 }
 .admin-btn{
     border:1px solid #333;
@@ -182,12 +160,7 @@ nav a:hover{
     padding:80px 7%;
 }
 .section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
     margin-bottom:35px;
-    flex-wrap:wrap;
-    gap:15px;
 }
 .section-head p{
     color:#777;
@@ -310,13 +283,9 @@ nav a:hover{
     cursor:pointer;
     font-size:19px;
     z-index:5;
-    display:flex;
-    align-items:center;
-    justify-content:center;
 }
 .favorite.active{
     color:#ff3030;
-    border-color:#ff3030;
 }
 .car-info{
     padding:20px;
@@ -620,12 +589,11 @@ footer{
 <body>
 
 <header>
-    <a href="index.html" class="logo">N1 <span>CENTER</span></a>
+    <div class="logo">N1 <span>CENTER</span></div>
     <nav>
-        <a href="index.html#catalog">Автомобильдер</a>
-        <a href="index.html#about">О нас</a>
-        <a href="index.html#contact">Контакты</a>
-        <a href="favorites.html" class="favorites-link">❤️ Таңдаулылар <span id="favCount">0</span></a>
+        <a href="#catalog">Автомобильдер</a>
+        <a href="#about">О нас</a>
+        <a href="#contact">Контакты</a>
     </nav>
     <button class="admin-btn" onclick="openAdmin()">🔐 Админ</button>
 </header>
@@ -652,12 +620,10 @@ footer{
 
 <section class="section" id="catalog">
     <div class="section-head">
-        <div>
-            <p>БІЗДІҢ АВТОПАРК</p>
-            <h2>Автомобильдер</h2>
-        </div>
+        <p>БІЗДІҢ АВТОПАРК</p>
+        <h2>Автомобильдер</h2>
     </div>
-    <div class="filters" id="filtersBlock">
+    <div class="filters">
         <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
         <select id="year" onchange="showCars()">
             <option value="">Барлық жыл</option>
@@ -735,6 +701,7 @@ footer{
     </div>
 </div>
 
+<!-- Үлкен фото модалы -->
 <div class="image-modal" id="imageModal" onclick="closeImage()">
     <span class="image-close" onclick="closeImage()">×</span>
     <div class="image-modal-content" onclick="event.stopPropagation()">
@@ -759,11 +726,8 @@ const currentPhotoIndexes = {};
 let activeModalCarId = null;
 let activeModalPhotoIndex = 0;
 
-let favorites = JSON.parse(localStorage.getItem("n1_favorites")) || [];
-
 function generateYears(){
     const yearSelect = document.getElementById("year");
-    if(!yearSelect) return;
     const currentYear = new Date().getFullYear();
     for(let y = currentYear; y >= 1990; y--){
         const opt = document.createElement("option");
@@ -773,7 +737,6 @@ function generateYears(){
     }
 }
 generateYears();
-updateFavCount();
 
 const firebaseConfig = {
     apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
@@ -799,23 +762,19 @@ function loadCars(){
         },
         error => {
             console.error(error);
-            const container = document.getElementById("cars");
-            if(container) {
-                container.innerHTML = `
-                    <div class="empty">
-                        <div style="font-size:55px">⚠️</div>
-                        <h3>Firebase қатесі</h3>
-                        <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
-                    </div>
-                `;
-            }
+            document.getElementById("cars").innerHTML = `
+                <div class="empty">
+                    <div style="font-size:55px">⚠️</div>
+                    <h3>Firebase қатесі</h3>
+                    <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
+                </div>
+            `;
         }
     );
 }
 
 function showCars(){
     const container = document.getElementById("cars");
-    if(!container) return;
     const search = document.getElementById("search").value.toLowerCase().trim();
     const year = document.getElementById("year").value;
     const sort = document.getElementById("sort").value;
@@ -859,7 +818,6 @@ function showCars(){
         const currentPhoto = photos[photoIndex];
 
         const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
-        const isFav = favorites.includes(car.id);
         
         let dotsHtml = "";
         if(photos.length > 1){
@@ -875,7 +833,7 @@ function showCars(){
                 <div class="car-photo" onclick="openImage('${car.id}')">
                     <img src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
                     ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
-                    <button class="favorite ${isFav ? 'active' : ''}" onclick="event.stopPropagation();toggleFavorite('${car.id}', this)">${isFav ? '♥' : '♡'}</button>
+                    <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
                     
                     ${photos.length > 1 ? `
                         <button class="slide-btn prev-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', -1)">❮</button>
@@ -899,8 +857,7 @@ function showCars(){
             </div>
         `;
     });
-    const statEl = document.getElementById("statCars");
-    if(statEl) statEl.innerText = cars.length + "+";
+    document.getElementById("statCars").innerText = cars.length + "+";
 }
 
 function changePhoto(carId, direction){
@@ -916,28 +873,13 @@ function changePhoto(carId, direction){
     showCars();
 }
 
-function toggleFavorite(carId, button){
-    const index = favorites.indexOf(carId);
-    if(index > -1){
-        favorites.splice(index, 1);
-        button.classList.remove("active");
-        button.innerText = "♡";
-    } else {
-        favorites.push(carId);
-        button.classList.add("active");
-        button.innerText = "♥";
-    }
-    localStorage.setItem("n1_favorites", JSON.stringify(favorites));
-    updateFavCount();
-}
-
-function updateFavCount(){
-    const countEl = document.getElementById("favCount");
-    if(countEl) countEl.innerText = favorites.length;
-}
-
 function priceNumber(price){
     return Number(String(price).replace(/\D/g,"")) || 0;
+}
+
+function toggleFavorite(button){
+    button.classList.toggle("active");
+    button.innerText = button.classList.contains("active") ? "♥" : "♡";
 }
 
 function openAdmin(){
@@ -1046,7 +988,6 @@ function clearForm(){
 
 function showAdminCars(){
     const container = document.getElementById("adminCars");
-    if(!container) return;
     container.innerHTML = "";
     if(cars.length === 0){
         container.innerHTML = `<p style="color:#666; margin-top:15px;">Әзірге көлік жоқ.</p>`;
@@ -1104,6 +1045,7 @@ function updateModalImage(){
 
     document.getElementById("bigImage").src = url;
     
+    // Скачать сілтемесін баптау
     const downloadBtn = document.getElementById("downloadLink");
     downloadBtn.href = url;
     downloadBtn.setAttribute("download", (car.brand || "car") + "_" + (activeModalPhotoIndex + 1) + ".jpg");
