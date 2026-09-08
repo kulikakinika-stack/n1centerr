@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="N1 CENTER — Алматыдағы автокөліктер. Сапалы автомобильдер, ашық баға және WhatsApp байланысы.">
 <title>N1 CENTER | Premium Auto</title>
 <style>
 *{
@@ -19,7 +18,6 @@ body{
     background:#080808;
     color:#fff;
 }
-/* ================= HEADER ================= */
 header{
     position:fixed;
     top:0;
@@ -65,7 +63,6 @@ nav a:hover{
 .admin-btn:hover{
     background:#222;
 }
-/* ================= HERO ================= */
 .hero{
     min-height:100vh;
     display:flex;
@@ -73,13 +70,7 @@ nav a:hover{
     padding:130px 7% 70px;
     position:relative;
     overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 75% 40%,
-            rgba(255,30,30,.22),
-            transparent 35%
-        ),
-        linear-gradient(110deg,#050505,#111);
+    background:radial-gradient(circle at 75% 40%, rgba(255,30,30,.22), transparent 35%), linear-gradient(110deg,#050505,#111);
 }
 .hero-content{
     max-width:720px;
@@ -138,17 +129,6 @@ nav a:hover{
     text-decoration:none;
     background:#111;
 }
-.hero-glow{
-    position:absolute;
-    width:500px;
-    height:500px;
-    right:-150px;
-    bottom:-200px;
-    background:#ff2020;
-    filter:blur(180px);
-    opacity:.16;
-}
-/* ================= STATS ================= */
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -169,7 +149,6 @@ nav a:hover{
 .stat span{
     color:#777;
 }
-/* ================= SECTION ================= */
 .section{
     padding:80px 7%;
 }
@@ -182,15 +161,13 @@ nav a:hover{
 .section-head h2{
     font-size:42px;
 }
-/* ================= FILTERS ================= */
 .filters{
     display:grid;
     grid-template-columns:2fr 1fr 1fr;
     gap:12px;
     margin-bottom:30px;
 }
-.filters input,
-.filters select{
+.filters input, .filters select{
     background:#111;
     color:white;
     border:1px solid #292929;
@@ -198,7 +175,6 @@ nav a:hover{
     border-radius:10px;
     outline:none;
 }
-/* ================= CARS ================= */
 .cars{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
@@ -297,7 +273,6 @@ nav a:hover{
     border-radius:9px;
     font-weight:bold;
 }
-/* ================= ABOUT ================= */
 .about{
     background:#0e0e0e;
     display:grid;
@@ -333,15 +308,9 @@ nav a:hover{
 .about-box span{
     color:#777;
 }
-/* ================= CONTACT ================= */
 .contact{
     text-align:center;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,35,35,.12),
-            transparent 55%
-        );
+    background:radial-gradient(circle, rgba(255,35,35,.12), transparent 55%);
 }
 .contact h2{
     font-size:45px;
@@ -351,7 +320,6 @@ nav a:hover{
     color:#888;
     margin-bottom:25px;
 }
-/* ================= FOOTER ================= */
 footer{
     padding:30px 7%;
     border-top:1px solid #1c1c1c;
@@ -359,7 +327,6 @@ footer{
     display:flex;
     justify-content:space-between;
 }
-/* ================= MODAL ================= */
 .modal{
     display:none;
     position:fixed;
@@ -403,8 +370,7 @@ footer{
     color:#aaa;
     font-size:14px;
 }
-.form input,
-.form textarea{
+.form input, .form textarea{
     width:100%;
     padding:13px;
     border-radius:9px;
@@ -481,7 +447,6 @@ footer{
     border-radius:7px;
     cursor:pointer;
 }
-/* ================= IMAGE VIEWER ================= */
 .image-modal{
     display:none;
     position:fixed;
@@ -505,460 +470,172 @@ footer{
     font-size:40px;
     cursor:pointer;
 }
-/* ================= EMPTY ================= */
 .empty{
     grid-column:1/-1;
     text-align:center;
     padding:70px 20px;
     color:#666;
 }
-/* ================= MOBILE ================= */
 @media(max-width:750px){
-    nav{
-        display:none;
-    }
-    header{
-        padding:15px 5%;
-    }
-    .logo{
-        font-size:22px;
-    }
-    .stats{
-        grid-template-columns:1fr;
-    }
-    .filters{
-        grid-template-columns:1fr;
-    }
-    .about{
-        grid-template-columns:1fr;
-    }
-    .about h2{
-        font-size:35px;
-    }
-    .form{
-        grid-template-columns:1fr;
-    }
-    .full{
-        grid-column:auto;
-    }
-    .photo-preview{
-        grid-template-columns:repeat(3,1fr);
-    }
-    footer{
-        flex-direction:column;
-        gap:10px;
-    }
+    nav{display:none;}
+    header{padding:15px 5%;}
+    .logo{font-size:22px;}
+    .stats{grid-template-columns:1fr;}
+    .filters{grid-template-columns:1fr;}
+    .about{grid-template-columns:1fr;}
+    .about h2{font-size:35px;}
+    .form{grid-template-columns:1fr;}
+    .full{grid-column:auto;}
+    .photo-preview{grid-template-columns:repeat(3,1fr);}
+    footer{flex-direction:column;gap:10px;}
 }
 </style>
 </head>
 <body>
-<!-- ================= HEADER ================= -->
+
 <header>
-    <div class="logo">
-        N1 <span>CENTER</span>
-    </div>
+    <div class="logo">N1 <span>CENTER</span></div>
     <nav>
         <a href="#catalog">Автомобильдер</a>
         <a href="#about">О нас</a>
         <a href="#contact">Контакты</a>
     </nav>
-    <button
-        class="admin-btn"
-        onclick="openAdmin()">
-        🔐 Админ
-    </button>
+    <button class="admin-btn" onclick="openAdmin()">🔐 Админ</button>
 </header>
-<!-- ================= HERO ================= -->
+
 <section class="hero">
     <div class="hero-content">
-        <div class="badge">
-            PREMIUM AUTO • ALMATY
-        </div>
-        <h1>
-            Өзіңе лайық
-            <span>көлікті</span>
-            тап.
-        </h1>
-        <p>
-            N1 CENTER — сапалы автокөліктер,
-            ашық баға және кәсіби қызмет.
-            Өзіңе ұнайтын көлікті таңда да,
-            бізбен WhatsApp арқылы байланыс.
-        </p>
+        <div class="badge">PREMIUM AUTO • ALMATY</div>
+        <h1>Өзіңе лайық <span>көлікті</span> тап.</h1>
+        <p>N1 CENTER — сапалы автокөліктер, ашық баға және кәсіби қызмет. Өзіңе ұнайтын көлікті таңда да, бізбен WhatsApp арқылы байланыс.</p>
         <div class="hero-buttons">
-            <a
-                href="#catalog"
-                class="primary-btn">
-                🚘 Көліктерді көру
-            </a>
-            <a
-                href="https://wa.me/77072351858"
-                target="_blank"
-                class="secondary-btn">
-                WhatsApp →
-            </a>
+            <a href="#catalog" class="primary-btn">🚘 Көліктерді көру</a>
+            <a href="https://wa.me/77072351858" target="_blank" class="secondary-btn">WhatsApp →</a>
         </div>
     </div>
-    <div class="hero-glow"></div>
 </section>
-<!-- ================= STATS ================= -->
+
 <section class="stats">
-    <div class="stat">
-        <strong id="statCars">
-            0+
-        </strong>
-        <span>
-            Автокөлік
-        </span>
-    </div>
-    <div class="stat">
-        <strong>
-            24/7
-        </strong>
-        <span>
-            Клиенттермен байланыс
-        </span>
-    </div>
-    <div class="stat">
-        <strong>
-            Almaty
-        </strong>
-        <span>
-            Біздің орналасқан жеріміз
-        </span>
-    </div>
+    <div class="stat"><strong id="statCars">0+</strong><span>Автокөлік</span></div>
+    <div class="stat"><strong>24/7</strong><span>Клиенттермен байланыс</span></div>
+    <div class="stat"><strong>Almaty</strong><span>Біздің орналасқан жеріміз</span></div>
 </section>
-<!-- ================= CATALOG ================= -->
-<section
-    class="section"
-    id="catalog">
+
+<section class="section" id="catalog">
     <div class="section-head">
-        <p>
-            БІЗДІҢ АВТОПАРК
-        </p>
-        <h2>
-            Автомобильдер
-        </h2>
+        <p>БІЗДІҢ АВТОПАРК</p>
+        <h2>Автомобильдер</h2>
     </div>
     <div class="filters">
-        <input
-            id="search"
-            type="text"
-            placeholder="🔎 Марка немесе модель..."
-            oninput="showCars()"
-        >
-        <select
-            id="year"
-            onchange="showCars()">
-            <option value="">
-                Барлық жыл
-            </option>
-            <option>2026</option>
-            <option>2025</option>
-            <option>2024</option>
-            <option>2023</option>
-            <option>2022</option>
-            <option>2021</option>
-            <option>2020</option>
-            <option>2019</option>
-            <option>2018</option>
-            <option>2017</option>
-            <option>2016</option>
-            <option>2015</option>
-            <option>2014</option>
-            <option>2013</option>
-            <option>2012</option>
-            <option>2011</option>
-            <option>2010</option>
+        <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
+        <select id="year" onchange="showCars()">
+            <option value="">Барлық жыл</option>
+            <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+            <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+            <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
         </select>
-        <select
-            id="sort"
-            onchange="showCars()">
-            <option value="">
-                Сұрыптау
-            </option>
-            <option value="cheap">
-                Арзан → қымбат
-            </option>
-            <option value="expensive">
-                Қымбат → арзан
-            </option>
-            <option value="new">
-                Жаңа → ескі
-            </option>
+        <select id="sort" onchange="showCars()">
+            <option value="">Сұрыптау</option>
+            <option value="cheap">Арзан → қымбат</option>
+            <option value="expensive">Қымбат → арзан</option>
+            <option value="new">Жаңа → ескі</option>
         </select>
     </div>
-    <div
-        class="cars"
-        id="cars">
-        <div class="empty">
-            🚘 Автомобильдер жүктелуде...
-        </div>
+    <div class="cars" id="cars">
+        <div class="empty">🚘 Автомобильдер жүктелуде...</div>
     </div>
 </section>
-<!-- ================= ABOUT ================= -->
-<section
-    class="section about"
-    id="about">
+
+<section class="section about" id="about">
     <div>
-        <p>
-            WHY N1 CENTER
-        </p>
-        <h2>
-            Көлік таңдау —
-            оңай болуы керек.
-        </h2>
-        <p>
-            Біз әр клиентке өзіне сәйкес
-            автомобильді табуға көмектесеміз.
-            Автокөліктің жағдайы, бағасы және
-            комплектациясы туралы толық ақпарат
-            беруге тырысамыз.
-        </p>
+        <p>WHY N1 CENTER</p>
+        <h2>Көлік таңдау — оңай болуы керек.</h2>
+        <p>Біз әр клиентке өзіне сәйкес автомобильді табуға көмектесеміз. Автокөліктің жағдайы, бағасы және комплектациясы туралы толық ақпарат беруге тырысамыз.</p>
     </div>
     <div class="about-boxes">
-        <div class="about-box">
-            <b>🚘</b>
-            <span>
-                Сапалы автомобильдер
-            </span>
-        </div>
-        <div class="about-box">
-            <b>💰</b>
-            <span>
-                Ашық баға
-            </span>
-        </div>
-        <div class="about-box">
-            <b>⚡</b>
-            <span>
-                Жылдам байланыс
-            </span>
-        </div>
-        <div class="about-box">
-            <b>🤝</b>
-            <span>
-                Клиентке жеке көзқарас
-            </span>
-        </div>
+        <div class="about-box"><b>🚘</b><span>Сапалы автомобильдер</span></div>
+        <div class="about-box"><b>💰</b><span>Ашық баға</span></div>
+        <div class="about-box"><b>⚡</b><span>Жылдам байланыс</span></div>
+        <div class="about-box"><b>🤝</b><span>Клиентке жеке көзқарас</span></div>
     </div>
 </section>
-<!-- ================= CONTACT ================= -->
-<section
-    class="section contact"
-    id="contact">
-    <h2>
-        Көлік ұнады ма?
-    </h2>
-    <p>
-        Бізге WhatsApp арқылы жазыңыз.
-    </p>
-    <a
-        href="https://wa.me/77072351858"
-        target="_blank"
-        class="primary-btn">
-        🟢 WhatsApp-қа жазу
-    </a>
+
+<section class="section contact" id="contact">
+    <h2>Көлік ұнады ма?</h2>
+    <p>Бізге WhatsApp арқылы жазыңыз.</p>
+    <a href="https://wa.me/77072351858" target="_blank" class="primary-btn">🟢 WhatsApp-қа жазу</a>
 </section>
-<!-- ================= FOOTER ================= -->
+
 <footer>
-    <div>
-        © 2026 N1 CENTER
-    </div>
-    <div>
-        ALMATY • PREMIUM AUTO
-    </div>
+    <div>© 2026 N1 CENTER</div>
+    <div>ALMATY • PREMIUM AUTO</div>
 </footer>
-<!-- ================= ADMIN ================= -->
-<div
-    class="modal"
-    id="adminModal">
+
+<div class="modal" id="adminModal">
     <div class="admin">
         <div class="admin-top">
-            <h2>
-                🚘 N1 CENTER ADMIN
-            </h2>
-            <span
-                class="close"
-                onclick="closeAdmin()">
-                ×
-            </span>
+            <h2>🚘 N1 CENTER ADMIN</h2>
+            <span class="close" onclick="closeAdmin()">×</span>
         </div>
         <div class="form">
-            <div>
-                <label>
-                    Марка / модель
-                </label>
-                <input
-                    id="brand"
-                    placeholder="Toyota Camry 70">
-            </div>
-            <div>
-                <label>
-                    Жылы
-                </label>
-                <input
-                    id="carYear"
-                    type="number"
-                    placeholder="2019">
-            </div>
-            <div>
-                <label>
-                    Мотор
-                </label>
-                <input
-                    id="engine"
-                    placeholder="2.5 бензин">
-            </div>
-            <div>
-                <label>
-                    Коробка
-                </label>
-                <input
-                    id="gearbox"
-                    placeholder="Автомат">
-            </div>
-            <div>
-                <label>
-                    Привод
-                </label>
-                <input
-                    id="drive"
-                    placeholder="Передний">
-            </div>
-            <div>
-                <label>
-                    Пробег
-                </label>
-                <input
-                    id="mileage"
-                    placeholder="97 000 км">
-            </div>
-            <div>
-                <label>
-                    Бағасы
-                </label>
-                <input
-                    id="price"
-                    placeholder="10 500 000 ₸">
-            </div>
-            <div>
-                <label>
-                    Белгі
-                </label>
-                <input
-                    id="label"
-                    placeholder="ТОП / ЖАҢА / ХИТ">
-            </div>
+            <div><label>Марка / модель</label><input id="brand" placeholder="Toyota Camry 70"></div>
+            <div><label>Жылы</label><input id="carYear" type="number" placeholder="2019"></div>
+            <div><label>Мотор</label><input id="engine" placeholder="2.5 бензин"></div>
+            <div><label>Коробка</label><input id="gearbox" placeholder="Автомат"></div>
+            <div><label>Привод</label><input id="drive" placeholder="Передний"></div>
+            <div><label>Пробег</label><input id="mileage" placeholder="97 000 км"></div>
+            <div><label>Бағасы</label><input id="price" placeholder="10 500 000 ₸"></div>
+            <div><label>Белгі</label><input id="label" placeholder="ТОП / ЖАҢА / ХИТ"></div>
             <div class="full">
-                <label>
-                    📸 Фото — 1-10 дана
-                </label>
+                <label>📸 Фото — 1-10 дана</label>
                 <div class="photo-input">
-                    <input
-                        id="imageFiles"
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onchange="previewPhotos()">
-                    <p style="
-                        color:#777;
-                        margin-top:10px;
-                    ">
-                        Телефоннан немесе компьютерден
-                        фото таңдаңыз
-                    </p>
+                    <input id="imageFiles" type="file" accept="image/*" multiple onchange="previewPhotos()">
+                    <p style="color:#777; margin-top:10px;">Телефоннан немесе компьютерден фото таңдаңыз</p>
                 </div>
-                <div
-                    class="photo-preview"
-                    id="photoPreview">
-                </div>
+                <div class="photo-preview" id="photoPreview"></div>
             </div>
-            <div class="full">
-                <label>
-                    Сипаттамасы
-                </label>
-                <textarea
-                    id="description"
-                    placeholder="Көлік туралы ақпарат..."></textarea>
-            </div>
+            <div class="full"><label>Сипаттамасы</label><textarea id="description" placeholder="Көлік туралы ақпарат..."></textarea></div>
         </div>
-        <button
-            class="publish"
-            id="publishButton"
-            onclick="addCar()">
-            🚀 КӨЛІКТІ ЖАРИЯЛАУ
-        </button>
+        <button class="publish" id="publishButton" onclick="addCar()">🚀 КӨЛІКТІ ЖАРИЯЛАУ</button>
         <div class="admin-list">
-            <h3>
-                Сайттағы көліктер
-            </h3>
+            <h3>Сайттағы көліктер</h3>
             <div id="adminCars"></div>
         </div>
     </div>
 </div>
-<!-- IMAGE MODAL -->
-<div
-    class="image-modal"
-    id="imageModal"
-    onclick="closeImage()">
-    <span class="image-close">
-        ×
-    </span>
-    <img
-        id="bigImage"
-        src=""
-        onclick="event.stopPropagation()">
+
+<div class="image-modal" id="imageModal" onclick="closeImage()">
+    <span class="image-close">×</span>
+    <img id="bigImage" src="" onclick="event.stopPropagation()">
 </div>
-<!-- ================= FIREBASE ================= -->
+
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <script>
-/* =========================
-   SETTINGS
-========================= */
 const WHATSAPP = "77072351858";
 const ADMIN_PASSWORD = "7777";
 const IMGBB_API_KEY = "cf5ecae0db6b81363d9b8aca69a0c525";
-/* =========================
-   FIREBASE CONFIG
-========================= */
+
+let cars = [];
+
 const firebaseConfig = {
-    apiKey:
-        "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
-    authDomain:
-        "n1center.firebaseapp.com",
-    projectId:
-        "n1center",
-    storageBucket:
-        "n1center.firebasestorage.app",
-    messagingSenderId:
-        "163249895962",
-    appId:
-        "1:163249895962:web:ec9204591db778c196efa3",
-    measurementId:
-        "G-CMSX1LSG5N"
+    apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
+    authDomain: "n1center.firebaseapp.com",
+    projectId: "n1center",
+    storageBucket: "n1center.firebasestorage.app",
+    messagingSenderId: "163249895962",
+    appId: "1:163249895962:web:ec9204591db778c196efa3",
+    measurementId: "G-CMSX1LSG5N"
 };
 firebase.initializeApp(firebaseConfig);
-const db =
-    firebase.firestore();
-const storage =
-    firebase.storage();
-/* =========================
-   LOAD CARS
-========================= */
+const db = firebase.firestore();
+
 function loadCars(){
-    db.collection("cars")
-    .orderBy("createdAt","desc")
-    .onSnapshot(
+    db.collection("cars").orderBy("createdAt","desc").onSnapshot(
         snapshot => {
             cars = [];
             snapshot.forEach(doc => {
-                cars.push({
-                    id:doc.id,
-                    ...doc.data()
-                });
+                cars.push({ id: doc.id, ...doc.data() });
             });
             showCars();
             showAdminCars();
@@ -967,392 +644,179 @@ function loadCars(){
             console.error(error);
             document.getElementById("cars").innerHTML = `
                 <div class="empty">
-                    <div style="font-size:55px">
-                        ⚠️
-                    </div>
-                    <h3>
-                        Firebase қатесі
-                    </h3>
-                    <p style="margin-top:10px">
-                        Firebase баптауларын тексеріңіз.
-                    </p>
+                    <div style="font-size:55px">⚠️</div>
+                    <h3>Firebase қатесі</h3>
+                    <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
                 </div>
             `;
         }
     );
 }
-/* =========================
-   SHOW CARS
-========================= */
+
 function showCars(){
-    const container =
-        document.getElementById("cars");
-    const search =
-        document.getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
-    const year =
-        document.getElementById("year").value;
-    const sort =
-        document.getElementById("sort").value;
-    let filtered =
-        cars.filter(car => {
-            const name =
-                String(car.brand || "")
-                .toLowerCase();
-            const matchName =
-                name.includes(search);
-            const matchYear =
-                year === "" ||
-                String(car.year) === year;
-            return matchName && matchYear;
-        });
+    const container = document.getElementById("cars");
+    const search = document.getElementById("search").value.toLowerCase().trim();
+    const year = document.getElementById("year").value;
+    const sort = document.getElementById("sort").value;
+    
+    let filtered = cars.filter(car => {
+        const name = String(car.brand || "").toLowerCase();
+        const matchName = name.includes(search);
+        const matchYear = year === "" || String(car.year) === year;
+        return matchName && matchYear;
+    });
+
     if(sort === "cheap"){
-        filtered.sort(
-            (a,b) =>
-            priceNumber(a.price) -
-            priceNumber(b.price)
-        );
+        filtered.sort((a,b) => priceNumber(a.price) - priceNumber(b.price));
     }
     if(sort === "expensive"){
-        filtered.sort(
-            (a,b) =>
-            priceNumber(b.price) -
-            priceNumber(a.price)
-        );
+        filtered.sort((a,b) => priceNumber(b.price) - priceNumber(a.price));
     }
     if(sort === "new"){
-        filtered.sort(
-            (a,b) =>
-            Number(b.year || 0) -
-            Number(a.year || 0)
-        );
+        filtered.sort((a,b) => Number(b.year || 0) - Number(a.year || 0));
     }
+
     container.innerHTML = "";
     if(filtered.length === 0){
         container.innerHTML = `
             <div class="empty">
-                <div style="font-size:55px">
-                    🚘
-                </div>
-                <h3>
-                    Қазір көлік жоқ
-                </h3>
-                <p style="margin-top:8px">
-                    Админ панельден бірінші көлікті қосыңыз.
-                </p>
+                <div style="font-size:55px">🚘</div>
+                <h3>Қазір көлік жоқ</h3>
+                <p style="margin-top:8px">Админ панельден бірінші көлікті қосыңыз.</p>
             </div>
         `;
+        return;
     }
+
     filtered.forEach(car => {
-        const photo =
-            car.photos &&
-            car.photos.length
-            ?
-            car.photos[0]
-            :
-            "https://via.placeholder.com/700x450?text=N1+CENTER";
-        const message =
-            encodeURIComponent(
-                "Сәлеметсіз бе! " +
-                car.brand +
-                " көлігі туралы ақпарат алғым келеді."
-            );
+        const photo = car.photos && car.photos.length ? car.photos[0] : "https://via.placeholder.com/700x450?text=N1+CENTER";
+        const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
+        
         container.innerHTML += `
             <div class="car">
-                <div
-                    class="car-photo"
-                    onclick="openImage('${photo}')">
-                    <img
-                        src="${photo}"
-                        loading="lazy"
-                        onerror="
-                            this.src='https://via.placeholder.com/700x450?text=N1+CENTER'
-                        ">
-                    ${
-                        car.label
-                        ?
-                        `<div class="car-label">
-                            ${car.label}
-                        </div>`
-                        :
-                        ""
-                    }
-                    <button
-                        class="favorite"
-                        onclick="event.stopPropagation();toggleFavorite(this)">
-                        ♡
-                    </button>
+                <div class="car-photo" onclick="openImage('${photo}')">
+                    <img src="${photo}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
+                    ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
+                    <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
                 </div>
                 <div class="car-info">
-                    <div class="car-title">
-                        ${car.brand || ""}
-                    </div>
-                    <div class="car-subtitle">
-                        ${car.year || ""} • Premium Auto
-                    </div>
+                    <div class="car-title">${car.brand || ""}</div>
+                    <div class="car-subtitle">${car.year || ""} • Premium Auto</div>
                     <div class="car-details">
-                        <div>
-                            ⚙️ ${car.engine || "-"}
-                        </div>
-                        <div>
-                            🔧 ${car.gearbox || "-"}
-                        </div>
-                        <div>
-                            🚗 ${car.drive || "-"}
-                        </div>
-                        <div>
-                            🛣️ ${car.mileage || "-"}
-                        </div>
+                        <div>⚙️ ${car.engine || "-"}</div>
+                        <div>🔧 ${car.gearbox || "-"}</div>
+                        <div>🚗 ${car.drive || "-"}</div>
+                        <div>🛣️ ${car.mileage || "-"}</div>
                     </div>
-                    <div class="price">
-                        ${car.price || ""}
-                    </div>
-                    <div class="description">
-                        ${car.description || ""}
-                    </div>
-                    <a
-                        class="whatsapp"
-                        href="https://wa.me/${WHATSAPP}?text=${message}"
-                        target="_blank">
-                        🟢 WhatsApp арқылы хабарласу
-                    </a>
+                    <div class="price">${car.price || ""}</div>
+                    <div class="description">${car.description || ""}</div>
+                    <a class="whatsapp" href="https://wa.me/${WHATSAPP}?text=${message}" target="_blank">🟢 WhatsApp арқылы хабарласу</a>
                 </div>
             </div>
         `;
     });
-    document.getElementById("statCars")
-        .innerText =
-        cars.length + "+";
+    document.getElementById("statCars").innerText = cars.length + "+";
 }
-/* =========================
-   PRICE
-========================= */
+
 function priceNumber(price){
-    return Number(
-        String(price)
-        .replace(/\D/g,"")
-    ) || 0;
+    return Number(String(price).replace(/\D/g,"")) || 0;
 }
-/* =========================
-   FAVORITE
-========================= */
+
 function toggleFavorite(button){
     button.classList.toggle("active");
-    button.innerText =
-        button.classList.contains("active")
-        ? "♥"
-        : "♡";
+    button.innerText = button.classList.contains("active") ? "♥" : "♡";
 }
-/* =========================
-   ADMIN LOGIN
-========================= */
+
 function openAdmin(){
-    const password =
-        prompt("🔐 Админ пароль:");
+    const password = prompt("🔐 Админ пароль:");
     if(password === ADMIN_PASSWORD){
-        document.getElementById(
-            "adminModal"
-        ).style.display = "block";
+        document.getElementById("adminModal").style.display = "block";
         showAdminCars();
-    }
-    else{
+    } else if(password !== null) {
         alert("❌ Пароль қате!");
     }
 }
+
 function closeAdmin(){
-    document.getElementById(
-        "adminModal"
-    ).style.display = "none";
+    document.getElementById("adminModal").style.display = "none";
 }
-/* =========================
-   PHOTO PREVIEW
-========================= */
+
 function previewPhotos(){
-    const input =
-        document.getElementById("imageFiles");
-    const files =
-        input.files;
-    const preview =
-        document.getElementById("photoPreview");
+    const input = document.getElementById("imageFiles");
+    const files = input.files;
+    const preview = document.getElementById("photoPreview");
     preview.innerHTML = "";
     if(files.length > 10){
-        alert(
-            "Максимум 10 фото!"
-        );
+        alert("Максимум 10 фото!");
         input.value = "";
         return;
     }
     Array.from(files).forEach(file => {
-        if(!file.type.startsWith("image/")){
-            return;
-        }
-        const reader =
-            new FileReader();
-        reader.onload =
-            function(e){
-                preview.innerHTML += `
-                    <img src="${e.target.result}">
-                `;
-            };
+        if(!file.type.startsWith("image/")) return;
+        const reader = new FileReader();
+        reader.onload = function(e){
+            preview.innerHTML += `<img src="${e.target.result}">`;
+        };
         reader.readAsDataURL(file);
     });
 }
-/* =========================
-   ADD CAR
-========================= */
+
 async function addCar(){
-    const button =
-        document.getElementById(
-            "publishButton"
-        );
-    const files =
-        document.getElementById(
-            "imageFiles"
-        ).files;
-    const brand =
-        document.getElementById(
-            "brand"
-        ).value.trim();
-    const year =
-        document.getElementById(
-            "carYear"
-        ).value.trim();
-    const engine =
-        document.getElementById(
-            "engine"
-        ).value.trim();
-    const gearbox =
-        document.getElementById(
-            "gearbox"
-        ).value.trim();
-    const drive =
-        document.getElementById(
-            "drive"
-        ).value.trim();
-    const mileage =
-        document.getElementById(
-            "mileage"
-        ).value.trim();
-    const price =
-        document.getElementById(
-            "price"
-        ).value.trim();
-    const label =
-        document.getElementById(
-            "label"
-        ).value.trim();
-    const description =
-        document.getElementById(
-            "description"
-        ).value.trim();
-    if(!brand){
-        alert("Марка / модель жазыңыз!");
-        return;
-    }
-    if(!price){
-        alert("Бағасын жазыңыз!");
-        return;
-    }
-    if(files.length === 0){
-        alert(
-            "Кем дегенде 1 фото таңдаңыз!"
-        );
-        return;
-    }
-    if(files.length > 10){
-        alert(
-            "Максимум 10 фото!"
-        );
-        return;
-    }
+    const button = document.getElementById("publishButton");
+    const files = document.getElementById("imageFiles").files;
+    const brand = document.getElementById("brand").value.trim();
+    const year = document.getElementById("carYear").value.trim();
+    const engine = document.getElementById("engine").value.trim();
+    const gearbox = document.getElementById("gearbox").value.trim();
+    const drive = document.getElementById("drive").value.trim();
+    const mileage = document.getElementById("mileage").value.trim();
+    const price = document.getElementById("price").value.trim();
+    const label = document.getElementById("label").value.trim();
+    const description = document.getElementById("description").value.trim();
+        
+    if(!brand){ alert("Марка / модель жазыңыз!"); return; }
+    if(!price){ alert("Бағасын жазыңыз!"); return; }
+    if(files.length === 0){ alert("Кем дегенде 1 фото таңдаңыз!"); return; }
+    
     button.disabled = true;
-    try{
+    try {
         const photoURLs = [];
-        /* ФОТОЛАРДЫ STORAGE-КЕ ЖҮКТЕУ */
-        for(
-            let i = 0;
-            i < files.length;
-            i++
-        ){
-            const file =
-                files[i];
-            button.innerText =
-                "⏳ Фото " +
-                (i + 1) +
-                "/" +
-                files.length +
-                " жүктелуде...";
-            const extension =
-                file.name
-                .split(".")
-                .pop();
-            const fileName =
-                Date.now() +
-                "_" +
-                Math.random()
-                .toString(36)
-                .substring(2) +
-                "_" +
-                i +
-                "." +
-                extension;
-            const storageRef =
-                storage
-                .ref()
-                .child(
-                    "cars/" +
-                    fileName
-                );
-            await storageRef.put(file);
-            const downloadURL =
-                await storageRef
-                .getDownloadURL();
-            photoURLs.push(
-                downloadURL
-            );
+        for(let i = 0; i < files.length; i++){
+            button.innerText = `⏳ Фото ${i + 1}/${files.length} жүктелуде...`;
+            
+            const formData = new FormData();
+            formData.append("image", files[i]);
+
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+
+            if(result.success){
+                photoURLs.push(result.data.url);
+            } else {
+                throw new Error("Фотоны ImgBB-ге жүктеу сәтсіз аяқталды.");
+            }
         }
-        /* FIRESTORE */
-        button.innerText =
-            "⏳ Сақталуда...";
-        await db
-        .collection("cars")
-        .add({
-            brand:brand,
-            year:year,
-            engine:engine,
-            gearbox:gearbox,
-            drive:drive,
-            mileage:mileage,
-            price:price,
-            label:label,
-            description:description,
-            photos:photoURLs,
-            createdAt:
-                firebase.firestore
-                .FieldValue
-                .serverTimestamp()
+
+        button.innerText = "⏳ Сақталуда...";
+        await db.collection("cars").add({
+            brand, year, engine, gearbox, drive, mileage, price, label, description,
+            photos: photoURLs,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+
         clearForm();
-        alert(
-            "🔥 Көлік сайтқа сәтті жарияланды!"
-        );
-    }
-    catch(error){
+        alert("🔥 Көлік сайтқа сәтті жарияланды!");
+    } catch(error){
         console.error(error);
-        alert(
-            "❌ Қате:\n\n" +
-            error.message
-        );
+        alert("❌ Қате:\n\n" + error.message);
     }
     button.disabled = false;
-    button.innerText =
-        "🚀 КӨЛІКТІ ЖАРИЯЛАУ";
+    button.innerText = "🚀 КӨЛІКТІ ЖАРИЯЛАУ";
 }
-/* =========================
-   CLEAR
-========================= */
+
 function clearForm(){
     document.getElementById("brand").value = "";
     document.getElementById("carYear").value = "";
@@ -1366,132 +830,49 @@ function clearForm(){
     document.getElementById("imageFiles").value = "";
     document.getElementById("photoPreview").innerHTML = "";
 }
-/* =========================
-   ADMIN LIST
-========================= */
+
 function showAdminCars(){
-    const container =
-        document.getElementById(
-            "adminCars"
-        );
+    const container = document.getElementById("adminCars");
     container.innerHTML = "";
     if(cars.length === 0){
-        container.innerHTML = `
-            <p style="
-                color:#666;
-                margin-top:15px;
-            ">
-                Әзірге көлік жоқ.
-            </p>
-        `;
+        container.innerHTML = `<p style="color:#666; margin-top:15px;">Әзірге көлік жоқ.</p>`;
         return;
     }
     cars.forEach(car => {
-        const image =
-            car.photos &&
-            car.photos.length
-            ?
-            car.photos[0]
-            :
-            "";
+        const image = car.photos && car.photos.length ? car.photos[0] : "";
         container.innerHTML += `
             <div class="admin-item">
-                <img
-                    src="${image}"
-                    onerror="
-                        this.src='https://via.placeholder.com/100x70?text=CAR'
-                    ">
+                <img src="${image}" onerror="this.src='https://via.placeholder.com/100x70?text=CAR'">
                 <div class="admin-item-info">
-                    <b>
-                        ${car.brand || ""}
-                    </b>
-                    <br>
-                    <span style="color:#777">
-                        ${car.year || ""}
-                        •
-                        ${car.price || ""}
-                    </span>
+                    <b>${car.brand || ""}</b><br>
+                    <span style="color:#777">${car.year || ""} • ${car.price || ""}</span>
                 </div>
-                <button
-                    class="delete"
-                    onclick="deleteCar('${car.id}')">
-                    🗑️
-                </button>
+                <button class="delete" onclick="deleteCar('${car.id}')">🗑️</button>
             </div>
         `;
     });
 }
-/* =========================
-   DELETE
-========================= */
+
 async function deleteCar(id){
-    if(!confirm(
-        "Бұл көлікті толық өшіру керек пе?"
-    )){
-        return;
-    }
-    try{
-        const car =
-            cars.find(
-                item => item.id === id
-            );
-        /* СТОРАЖДАҒЫ ФОТОЛАРДЫ ӨШІРУ */
-        if(car && car.photos){
-            for(
-                const photoURL
-                of car.photos
-            ){
-                try{
-                    const photoRef =
-                        storage
-                        .refFromURL(
-                            photoURL
-                        );
-                    await photoRef.delete();
-                }
-                catch(e){
-                    console.log(
-                        "Фото табылмады немесе өшірілмеді"
-                    );
-                }
-            }
-        }
-        /* FIRESTORE */
-        await db
-        .collection("cars")
-        .doc(id)
-        .delete();
-        alert(
-            "🗑️ Көлік өшірілді!"
-        );
-    }
-    catch(error){
+    if(!confirm("Бұл көлікті толық өшіру керек пе?")) return;
+    try {
+        await db.collection("cars").doc(id).delete();
+        alert("🗑️ Көлік өшірілді!");
+    } catch(error){
         console.error(error);
-        alert(
-            "❌ Өшіру қатесі:\n\n" +
-            error.message
-        );
+        alert("❌ Өшіру қатесі:\n\n" + error.message);
     }
 }
-/* =========================
-   IMAGE VIEW
-========================= */
+
 function openImage(url){
-    document.getElementById(
-        "bigImage"
-    ).src = url;
-    document.getElementById(
-        "imageModal"
-    ).style.display = "flex";
+    document.getElementById("bigImage").src = url;
+    document.getElementById("imageModal").style.display = "flex";
 }
+
 function closeImage(){
-    document.getElementById(
-        "imageModal"
-    ).style.display = "none";
+    document.getElementById("imageModal").style.display = "none";
 }
-/* =========================
-   START
-========================= */
+
 loadCars();
 </script>
 </body>
