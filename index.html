@@ -42,6 +42,7 @@ header{
 }
 nav{
     display:flex;
+    align-items:center;
     gap:30px;
 }
 nav a{
@@ -51,6 +52,25 @@ nav a{
 }
 nav a:hover{
     color:#fff;
+}
+.favorites-link{
+    position:relative;
+    color:#fff !important;
+    background:#161616;
+    border:1px solid #333;
+    padding:8px 14px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+.favorites-link span#favCount{
+    background:#ff2929;
+    color:white;
+    font-size:11px;
+    padding:2px 6px;
+    border-radius:20px;
+    font-weight:bold;
 }
 .admin-btn{
     border:1px solid #333;
@@ -160,13 +180,31 @@ nav a:hover{
     padding:80px 7%;
 }
 .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
     margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:15px;
 }
 .section-head p{
     color:#777;
 }
 .section-head h2{
     font-size:42px;
+}
+.reset-filter-btn{
+    background:none;
+    border:1px solid #333;
+    color:#aaa;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    display:none;
+}
+.reset-filter-btn:hover{
+    color:#fff;
+    border-color:#ff2929;
 }
 .filters{
     display:grid;
@@ -283,9 +321,13 @@ nav a:hover{
     cursor:pointer;
     font-size:19px;
     z-index:5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 .favorite.active{
     color:#ff3030;
+    border-color:#ff3030;
 }
 .car-info{
     padding:20px;
@@ -594,6 +636,7 @@ footer{
         <a href="#catalog">Автомобильдер</a>
         <a href="#about">О нас</a>
         <a href="#contact">Контакты</a>
+        <a href="#catalog" class="favorites-link" onclick="toggleFavoritesFilter(event)">❤️ Таңдаулылар <span id="favCount">0</span></a>
     </nav>
     <button class="admin-btn" onclick="openAdmin()">🔐 Админ</button>
 </header>
@@ -620,10 +663,13 @@ footer{
 
 <section class="section" id="catalog">
     <div class="section-head">
-        <p>БІЗДІҢ АВТОПАРК</p>
-        <h2>Автомобильдер</h2>
+        <div>
+            <p>БІЗДІҢ АВТОПАРК</p>
+            <h2 id="catalogTitle">Автомобильдер</h2>
+        </div>
+        <button id="resetFilterBtn" class="reset-filter-btn" onclick="resetFavoritesFilter()">Барлық көліктерді көрсету</button>
     </div>
-    <div class="filters">
+    <div class="filters" id="filtersBlock">
         <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
         <select id="year" onchange="showCars()">
             <option value="">Барлық жыл</option>
@@ -701,7 +747,6 @@ footer{
     </div>
 </div>
 
-<!-- Үлкен фото модалы -->
 <div class="image-modal" id="imageModal" onclick="closeImage()">
     <span class="image-close" onclick="closeImage()">×</span>
     <div class="image-modal-content" onclick="event.stopPropagation()">
@@ -726,6 +771,9 @@ const currentPhotoIndexes = {};
 let activeModalCarId = null;
 let activeModalPhotoIndex = 0;
 
+let favorites = JSON.parse(localStorage.getItem("n1_favorites")) || [];
+let showOnlyFavorites = false;
+
 function generateYears(){
     const yearSelect = document.getElementById("year");
     const currentYear = new Date().getFullYear();
@@ -737,6 +785,7 @@ function generateYears(){
     }
 }
 generateYears();
+updateFavCount();
 
 const firebaseConfig = {
     apiKey: "AIzaSyAuQ9GFg4DVb12lGuY9l6k0YGah6r0C_AQ",
@@ -780,6 +829,10 @@ function showCars(){
     const sort = document.getElementById("sort").value;
     
     let filtered = cars.filter(car => {
+        if(showOnlyFavorites && !favorites.includes(car.id)) {
+            return false;
+        }
+
         const name = String(car.brand || "").toLowerCase();
         const matchName = name.includes(search);
         const matchYear = year === "" || String(car.year) === year;
@@ -801,8 +854,8 @@ function showCars(){
         container.innerHTML = `
             <div class="empty">
                 <div style="font-size:55px">🚘</div>
-                <h3>Қазір көлік жоқ</h3>
-                <p style="margin-top:8px">Админ панельден бірінші көлікті қосыңыз.</p>
+                <h3>${showOnlyFavorites ? 'Таңдаулы көліктер жоқ' : 'Қазір көлік жоқ'}</h3>
+                <p style="margin-top:8px">${showOnlyFavorites ? 'Көліктердің жүрегіне (♡) басып сақтап қойыңыз.' : 'Админ панельден бірінші көлікті қосыңыз.'}</p>
             </div>
         `;
         return;
@@ -818,6 +871,7 @@ function showCars(){
         const currentPhoto = photos[photoIndex];
 
         const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
+        const isFav = favorites.includes(car.id);
         
         let dotsHtml = "";
         if(photos.length > 1){
@@ -833,7 +887,7 @@ function showCars(){
                 <div class="car-photo" onclick="openImage('${car.id}')">
                     <img src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
                     ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
-                    <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
+                    <button class="favorite ${isFav ? 'active' : ''}" onclick="event.stopPropagation();toggleFavorite('${car.id}', this)">${isFav ? '♥' : '♡'}</button>
                     
                     ${photos.length > 1 ? `
                         <button class="slide-btn prev-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', -1)">❮</button>
@@ -873,13 +927,49 @@ function changePhoto(carId, direction){
     showCars();
 }
 
-function priceNumber(price){
-    return Number(String(price).replace(/\D/g,"")) || 0;
+function toggleFavorite(carId, button){
+    const index = favorites.indexOf(carId);
+    if(index > -1){
+        favorites.splice(index, 1);
+        button.classList.remove("active");
+        button.innerText = "♡";
+    } else {
+        favorites.push(carId);
+        button.classList.add("active");
+        button.innerText = "♥";
+    }
+    localStorage.setItem("n1_favorites", JSON.stringify(favorites));
+    updateFavCount();
+
+    if(showOnlyFavorites){
+        showCars();
+    }
 }
 
-function toggleFavorite(button){
-    button.classList.toggle("active");
-    button.innerText = button.classList.contains("active") ? "♥" : "♡";
+function updateFavCount(){
+    document.getElementById("favCount").innerText = favorites.length;
+}
+
+function toggleFavoritesFilter(e){
+    e.preventDefault();
+    showOnlyFavorites = true;
+    document.getElementById("catalogTitle").innerText = "❤️ Сіздің таңдаулыларыңыз";
+    document.getElementById("resetFilterBtn").style.display = "block";
+    document.getElementById("filtersBlock").style.display = "none";
+    showCars();
+    document.getElementById("catalog").scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetFavoritesFilter(){
+    showOnlyFavorites = false;
+    document.getElementById("catalogTitle").innerText = "Автомобильдер";
+    document.getElementById("resetFilterBtn").style.display = "none";
+    document.getElementById("filtersBlock").style.display = "grid";
+    showCars();
+}
+
+function priceNumber(price){
+    return Number(String(price).replace(/\D/g,"")) || 0;
 }
 
 function openAdmin(){
@@ -1045,7 +1135,6 @@ function updateModalImage(){
 
     document.getElementById("bigImage").src = url;
     
-    // Скачать сілтемесін баптау
     const downloadBtn = document.getElementById("downloadLink");
     downloadBtn.href = url;
     downloadBtn.setAttribute("download", (car.brand || "car") + "_" + (activeModalPhotoIndex + 1) + ".jpg");
