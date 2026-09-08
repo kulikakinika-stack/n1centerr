@@ -514,13 +514,22 @@ footer{
     inset:0;
     z-index:5000;
     background:rgba(0,0,0,.96);
+    flex-direction:column;
     align-items:center;
     justify-content:center;
     padding:20px;
 }
-.image-modal img{
+.image-modal-content{
+    position:relative;
     max-width:95%;
-    max-height:90vh;
+    max-height:85vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.image-modal img{
+    max-width:100%;
+    max-height:85vh;
     object-fit:contain;
     border-radius:10px;
 }
@@ -530,6 +539,31 @@ footer{
     right:25px;
     font-size:40px;
     cursor:pointer;
+    z-index:5010;
+}
+.image-modal-actions{
+    margin-top:15px;
+    display:flex;
+    gap:15px;
+}
+.download-btn, .modal-slide-btn{
+    background:#1f1f1f;
+    color:white;
+    border:1px solid #444;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:.2s;
+}
+.download-btn:hover, .modal-slide-btn:hover{
+    background:#ff2929;
+    border-color:#ff2929;
 }
 .empty{
     grid-column:1/-1;
@@ -593,7 +627,6 @@ footer{
         <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
         <select id="year" onchange="showCars()">
             <option value="">Барлық жыл</option>
-            <!-- Скрипт арқылы 1990-нан қазіргі жылға дейін толық қосылады -->
         </select>
         <select id="sort" onchange="showCars()">
             <option value="">Сұрыптау</option>
@@ -668,9 +701,17 @@ footer{
     </div>
 </div>
 
+<!-- Үлкен фото модалы -->
 <div class="image-modal" id="imageModal" onclick="closeImage()">
-    <span class="image-close">×</span>
-    <img id="bigImage" src="" onclick="event.stopPropagation()">
+    <span class="image-close" onclick="closeImage()">×</span>
+    <div class="image-modal-content" onclick="event.stopPropagation()">
+        <img id="bigImage" src="">
+    </div>
+    <div class="image-modal-actions" onclick="event.stopPropagation()">
+        <button class="modal-slide-btn" onclick="modalChangePhoto(-1)">❮ Алдыңғы</button>
+        <a id="downloadLink" class="download-btn" href="" target="_blank" download>📥 Скачать фото</a>
+        <button class="modal-slide-btn" onclick="modalChangePhoto(1)">Келесі ❯</button>
+    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -681,10 +722,10 @@ const ADMIN_PASSWORD = "7777";
 const IMGBB_API_KEY = "cf5ecae0db6b81363d9b8aca69a0c525";
 
 let cars = [];
-// Әр көлік үшін ағымдағы көрсетіліп тұрған фото индексін сақтау
 const currentPhotoIndexes = {};
+let activeModalCarId = null;
+let activeModalPhotoIndex = 0;
 
-// Жылдарды автоматты түрде генерациялау (1990 - 2026)
 function generateYears(){
     const yearSelect = document.getElementById("year");
     const currentYear = new Date().getFullYear();
@@ -789,8 +830,8 @@ function showCars(){
 
         container.innerHTML += `
             <div class="car">
-                <div class="car-photo" onclick="openImage('${currentPhoto}')">
-                    <img id="car-img-${car.id}" src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
+                <div class="car-photo" onclick="openImage('${car.id}')">
+                    <img src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
                     ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
                     <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
                     
@@ -978,9 +1019,36 @@ async function deleteCar(id){
     }
 }
 
-function openImage(url){
-    document.getElementById("bigImage").src = url;
+function openImage(carId){
+    activeModalCarId = carId;
+    activeModalPhotoIndex = currentPhotoIndexes[carId] || 0;
+    updateModalImage();
     document.getElementById("imageModal").style.display = "flex";
+}
+
+function modalChangePhoto(direction){
+    const car = cars.find(c => c.id === activeModalCarId);
+    if(!car || !car.photos || car.photos.length <= 1) return;
+    
+    activeModalPhotoIndex += direction;
+    if(activeModalPhotoIndex < 0) activeModalPhotoIndex = car.photos.length - 1;
+    if(activeModalPhotoIndex >= car.photos.length) activeModalPhotoIndex = 0;
+    
+    updateModalImage();
+}
+
+function updateModalImage(){
+    const car = cars.find(c => c.id === activeModalCarId);
+    if(!car) return;
+    const photos = car.photos && car.photos.length ? car.photos : ["https://via.placeholder.com/700x450?text=N1+CENTER"];
+    const url = photos[activeModalPhotoIndex];
+
+    document.getElementById("bigImage").src = url;
+    
+    // Скачать сілтемесін баптау
+    const downloadBtn = document.getElementById("downloadLink");
+    downloadBtn.href = url;
+    downloadBtn.setAttribute("download", (car.brand || "car") + "_" + (activeModalPhotoIndex + 1) + ".jpg");
 }
 
 function closeImage(){
