@@ -36,6 +36,8 @@ header{
     font-size:28px;
     font-weight:900;
     letter-spacing:2px;
+    text-decoration:none;
+    color:white;
 }
 .logo span{
     color:#ff2b2b;
@@ -192,19 +194,6 @@ nav a:hover{
 }
 .section-head h2{
     font-size:42px;
-}
-.reset-filter-btn{
-    background:none;
-    border:1px solid #333;
-    color:#aaa;
-    padding:8px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    display:none;
-}
-.reset-filter-btn:hover{
-    color:#fff;
-    border-color:#ff2929;
 }
 .filters{
     display:grid;
@@ -631,12 +620,12 @@ footer{
 <body>
 
 <header>
-    <div class="logo">N1 <span>CENTER</span></div>
+    <a href="index.html" class="logo">N1 <span>CENTER</span></a>
     <nav>
-        <a href="#catalog">Автомобильдер</a>
-        <a href="#about">О нас</a>
-        <a href="#contact">Контакты</a>
-        <a href="#catalog" class="favorites-link" onclick="toggleFavoritesFilter(event)">❤️ Таңдаулылар <span id="favCount">0</span></a>
+        <a href="index.html#catalog">Автомобильдер</a>
+        <a href="index.html#about">О нас</a>
+        <a href="index.html#contact">Контакты</a>
+        <a href="favorites.html" class="favorites-link">❤️ Таңдаулылар <span id="favCount">0</span></a>
     </nav>
     <button class="admin-btn" onclick="openAdmin()">🔐 Админ</button>
 </header>
@@ -665,9 +654,8 @@ footer{
     <div class="section-head">
         <div>
             <p>БІЗДІҢ АВТОПАРК</p>
-            <h2 id="catalogTitle">Автомобильдер</h2>
+            <h2>Автомобильдер</h2>
         </div>
-        <button id="resetFilterBtn" class="reset-filter-btn" onclick="resetFavoritesFilter()">Барлық көліктерді көрсету</button>
     </div>
     <div class="filters" id="filtersBlock">
         <input id="search" type="text" placeholder="🔎 Марка немесе модель..." oninput="showCars()">
@@ -772,10 +760,10 @@ let activeModalCarId = null;
 let activeModalPhotoIndex = 0;
 
 let favorites = JSON.parse(localStorage.getItem("n1_favorites")) || [];
-let showOnlyFavorites = false;
 
 function generateYears(){
     const yearSelect = document.getElementById("year");
+    if(!yearSelect) return;
     const currentYear = new Date().getFullYear();
     for(let y = currentYear; y >= 1990; y--){
         const opt = document.createElement("option");
@@ -811,28 +799,28 @@ function loadCars(){
         },
         error => {
             console.error(error);
-            document.getElementById("cars").innerHTML = `
-                <div class="empty">
-                    <div style="font-size:55px">⚠️</div>
-                    <h3>Firebase қатесі</h3>
-                    <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
-                </div>
-            `;
+            const container = document.getElementById("cars");
+            if(container) {
+                container.innerHTML = `
+                    <div class="empty">
+                        <div style="font-size:55px">⚠️</div>
+                        <h3>Firebase қатесі</h3>
+                        <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
+                    </div>
+                `;
+            }
         }
     );
 }
 
 function showCars(){
     const container = document.getElementById("cars");
+    if(!container) return;
     const search = document.getElementById("search").value.toLowerCase().trim();
     const year = document.getElementById("year").value;
     const sort = document.getElementById("sort").value;
     
     let filtered = cars.filter(car => {
-        if(showOnlyFavorites && !favorites.includes(car.id)) {
-            return false;
-        }
-
         const name = String(car.brand || "").toLowerCase();
         const matchName = name.includes(search);
         const matchYear = year === "" || String(car.year) === year;
@@ -854,8 +842,8 @@ function showCars(){
         container.innerHTML = `
             <div class="empty">
                 <div style="font-size:55px">🚘</div>
-                <h3>${showOnlyFavorites ? 'Таңдаулы көліктер жоқ' : 'Қазір көлік жоқ'}</h3>
-                <p style="margin-top:8px">${showOnlyFavorites ? 'Көліктердің жүрегіне (♡) басып сақтап қойыңыз.' : 'Админ панельден бірінші көлікті қосыңыз.'}</p>
+                <h3>Қазір көлік жоқ</h3>
+                <p style="margin-top:8px">Админ панельден бірінші көлікті қосыңыз.</p>
             </div>
         `;
         return;
@@ -911,7 +899,8 @@ function showCars(){
             </div>
         `;
     });
-    document.getElementById("statCars").innerText = cars.length + "+";
+    const statEl = document.getElementById("statCars");
+    if(statEl) statEl.innerText = cars.length + "+";
 }
 
 function changePhoto(carId, direction){
@@ -940,32 +929,11 @@ function toggleFavorite(carId, button){
     }
     localStorage.setItem("n1_favorites", JSON.stringify(favorites));
     updateFavCount();
-
-    if(showOnlyFavorites){
-        showCars();
-    }
 }
 
 function updateFavCount(){
-    document.getElementById("favCount").innerText = favorites.length;
-}
-
-function toggleFavoritesFilter(e){
-    e.preventDefault();
-    showOnlyFavorites = true;
-    document.getElementById("catalogTitle").innerText = "❤️ Сіздің таңдаулыларыңыз";
-    document.getElementById("resetFilterBtn").style.display = "block";
-    document.getElementById("filtersBlock").style.display = "none";
-    showCars();
-    document.getElementById("catalog").scrollIntoView({ behavior: 'smooth' });
-}
-
-function resetFavoritesFilter(){
-    showOnlyFavorites = false;
-    document.getElementById("catalogTitle").innerText = "Автомобильдер";
-    document.getElementById("resetFilterBtn").style.display = "none";
-    document.getElementById("filtersBlock").style.display = "grid";
-    showCars();
+    const countEl = document.getElementById("favCount");
+    if(countEl) countEl.innerText = favorites.length;
 }
 
 function priceNumber(price){
@@ -1078,6 +1046,7 @@ function clearForm(){
 
 function showAdminCars(){
     const container = document.getElementById("adminCars");
+    if(!container) return;
     container.innerHTML = "";
     if(cars.length === 0){
         container.innerHTML = `<p style="color:#666; margin-top:15px;">Әзірге көлік жоқ.</p>`;
