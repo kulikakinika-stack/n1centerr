@@ -415,6 +415,19 @@ nav a:hover{
 .review-text.expanded{
     -webkit-line-clamp: unset;
 }
+.review-img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-top:12px;
+    cursor:pointer;
+    border:1px solid #162c23;
+    transition:.3s;
+}
+.review-img:hover{
+    border-color:#10b981;
+}
 .read-more-btn{
     background:none;
     border:none;
@@ -453,6 +466,22 @@ nav a:hover{
 .review-form textarea{
     height:90px;
     resize:none;
+}
+.review-file-label{
+    display:block;
+    border:2px dashed #162c23;
+    padding:12px;
+    border-radius:9px;
+    text-align:center;
+    color:#888;
+    cursor:pointer;
+    margin-bottom:12px;
+    font-size:14px;
+    transition:.3s;
+}
+.review-file-label:hover{
+    border-color:#10b981;
+    color:#10b981;
 }
 
 .about{
@@ -826,7 +855,11 @@ footer{
         <h3>💬 Пікір қалдыру</h3>
         <input type="text" id="reviewAuthor" placeholder="Аты-жөніңіз...">
         <textarea id="reviewText" placeholder="Өз пікіріңізді жазыңыз..."></textarea>
-        <button class="primary-btn" onclick="addReview()" style="width:100%;">Жіберу</button>
+        <label class="review-file-label" id="reviewFileLabel">
+            📸 Фото қосу (міндетті емес)
+            <input type="file" id="reviewImage" accept="image/*" style="display:none;" onchange="updateReviewFileName()">
+        </label>
+        <button class="primary-btn" id="reviewSubmitBtn" onclick="addReview()" style="width:100%;">Пікірді жіберу</button>
     </div>
 </section>
 
@@ -1046,12 +1079,14 @@ function showReviews(){
         return;
     }
     reviews.forEach(rev => {
+        let imageHtml = rev.imageUrl ? `<img src="${rev.imageUrl}" class="review-img" onclick="openDirectImage('${rev.imageUrl}')">` : "";
         container.innerHTML += `
             <div class="review-card">
                 <div>
                     <div class="review-author">${rev.author || "Қонақ"}</div>
                     <div class="review-date">${rev.date || ""}</div>
                     <div class="review-text" id="rev_${rev.id}">${rev.text || ""}</div>
+                    ${imageHtml}
                 </div>
                 <button class="read-more-btn" id="btn_${rev.id}" onclick="toggleReview('${rev.id}')">Толығырақ...</button>
             </div>
@@ -1068,8 +1103,10 @@ function showAdminReviews(){
         return;
     }
     reviews.forEach(rev => {
+        let thumb = rev.imageUrl ? `<img src="${rev.imageUrl}">` : `<div style="width:70px;height:55px;background:#162c23;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#777;">Фото жоқ</div>`;
         container.innerHTML += `
             <div class="admin-item">
+                ${thumb}
                 <div class="admin-item-info">
                     <b style="color:#10b981">${rev.author || "Қонақ"}</b><br>
                     <span style="color:#aaa; font-size:13px;">${rev.text || ""}</span>
@@ -1103,30 +1140,74 @@ function toggleReview(id){
     }
 }
 
+function updateReviewFileName(){
+    const input = document.getElementById("reviewImage");
+    const label = document.getElementById("reviewFileLabel");
+    if(input.files && input.files.length > 0){
+        label.style.borderColor = "#10b981";
+        label.style.color = "#10b981";
+        label.innerText = "✅ Фото таңдалды: " + input.files[0].name;
+    }
+}
+
 async function addReview(){
     const author = document.getElementById("reviewAuthor").value.trim();
     const text = document.getElementById("reviewText").value.trim();
+    const fileInput = document.getElementById("reviewImage");
+    const submitBtn = document.getElementById("reviewSubmitBtn");
+
     if(!author || !text){
-        alert("Барлық өрістерді толтырыңыз!");
+        alert("Аты-жөніңізді және пікіріңізді жазыңыз!");
         return;
     }
-    const dateObj = new Date();
-    const dateStr = dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+    submitBtn.disabled = true;
+    let imageUrl = "";
 
     try {
+        if(fileInput.files.length > 0){
+            submitBtn.innerText = "⏳ Фото жүктелуде...";
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            if(result.success){
+                imageUrl = result.data.url;
+            } else {
+                throw new Error("Фотоны серверге жүктеу сәтсіз аяқталды.");
+            }
+        }
+
+        submitBtn.innerText = "⏳ Жіберілуде...";
+        const dateObj = new Date();
+        const dateStr = dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
         await db.collection("reviews").add({
             author,
             text,
+            imageUrl,
             date: dateStr,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+
         document.getElementById("reviewAuthor").value = "";
         document.getElementById("reviewText").value = "";
+        fileInput.value = "";
+        document.getElementById("reviewFileLabel").innerHTML = '📸 Фото қосу (міндетті емес) <input type="file" id="reviewImage" accept="image/*" style="display:none;" onchange="updateReviewFileName()">';
+        document.getElementById("reviewFileLabel").style.borderColor = "#162c23";
+        document.getElementById("reviewFileLabel").style.color = "#888";
+        
         alert("✅ Пікіріңіз сәтті қосылды!");
     } catch(e){
         console.error(e);
-        alert("Қате орын алды.");
+        alert("❌ Қате: " + e.message);
     }
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Пікірді жіберу";
 }
 
 function changePhoto(carId, direction){
@@ -1292,7 +1373,16 @@ function openImage(carId){
     document.getElementById("imageModal").style.display = "flex";
 }
 
+function openDirectImage(url){
+    document.getElementById("bigImage").src = url;
+    const downloadBtn = document.getElementById("downloadLink");
+    downloadBtn.href = url;
+    downloadBtn.setAttribute("download", "review_photo.jpg");
+    document.getElementById("imageModal").style.display = "flex";
+}
+
 function modalChangePhoto(direction){
+    if(!activeModalCarId) return;
     const car = cars.find(c => c.id === activeModalCarId);
     if(!car || !car.photos || car.photos.length <= 1) return;
     activeModalPhotoIndex += direction;
@@ -1315,6 +1405,7 @@ function updateModalImage(){
 
 function closeImage(){
     document.getElementById("imageModal").style.display = "none";
+    activeModalCarId = null;
 }
 
 loadCars();
