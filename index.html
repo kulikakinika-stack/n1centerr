@@ -18,6 +18,35 @@ body{
     background:#060a08;
     color:#fff;
 }
+/* Анимация заставки (Apple style) */
+#splash-screen{
+    position:fixed;
+    inset:0;
+    background:#040706;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:opacity 0.8s ease, visibility 0.8s ease;
+}
+.splash-logo{
+    font-size:36px;
+    font-weight:900;
+    letter-spacing:3px;
+    opacity:0;
+    transform:scale(0.9);
+    animation: splashAnim 1.5s ease forwards;
+}
+.splash-logo span{
+    color:#10b981;
+}
+@keyframes splashAnim{
+    0% { opacity:0; transform:scale(0.9); }
+    50% { opacity:1; transform:scale(1); }
+    100% { opacity:0; transform:scale(1.05); visibility:hidden; }
+}
+
 header{
     position:fixed;
     top:0;
@@ -341,20 +370,91 @@ nav a:hover{
     line-height:1.5;
     margin-bottom:15px;
 }
-.whatsapp{
-    display:block;
-    text-align:center;
-    padding:13px;
-    background:#059669;
-    color:white;
-    text-decoration:none;
-    border-radius:9px;
+
+/* Отзывы бөлімінің стильдері */
+.reviews-section{
+    background:#080e0c;
+    border-top:1px solid #13261e;
+}
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+.review-card{
+    background:#0c1713;
+    border:1px solid #162c23;
+    border-radius:15px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+.review-author{
     font-weight:bold;
-    transition:.3s;
+    font-size:16px;
+    margin-bottom:5px;
+    color:#10b981;
 }
-.whatsapp:hover{
-    background:#10b981;
+.review-date{
+    font-size:12px;
+    color:#666;
+    margin-bottom:12px;
 }
+.review-text{
+    color:#aaa;
+    font-size:14px;
+    line-height:1.5;
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    transition: all 0.3s ease;
+}
+.review-text.expanded{
+    -webkit-line-clamp: unset;
+}
+.read-more-btn{
+    background:none;
+    border:none;
+    color:#10b981;
+    cursor:pointer;
+    font-size:13px;
+    margin-top:8px;
+    align-self:flex-start;
+    padding:0;
+}
+.review-form{
+    background:#09100d;
+    border:1px solid #162c23;
+    border-radius:18px;
+    padding:25px;
+    max-width:600px;
+    margin:40px auto 0;
+}
+.review-form h3{
+    margin-bottom:15px;
+    font-size:20px;
+}
+.review-form input, .review-form textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:9px;
+    border:1px solid #162c23;
+    background:#050a08;
+    color:white;
+    outline:none;
+}
+.review-form input:focus, .review-form textarea:focus{
+    border-color:#10b981;
+}
+.review-form textarea{
+    height:90px;
+    resize:none;
+}
+
 .about{
     background:#080e0c;
     display:grid;
@@ -640,11 +740,17 @@ footer{
 </head>
 <body>
 
+<!-- Apple стиліндегі ашылу анимациясы -->
+<div id="splash-screen">
+    <div class="splash-logo">N1 <span>CENTER</span></div>
+</div>
+
 <header>
     <div class="logo">N1 <span>CENTER</span></div>
     <nav>
         <a href="#catalog">Автомобильдер</a>
         <a href="#about">О нас</a>
+        <a href="#reviews">Отзывтар</a>
         <a href="#contact">Контакты</a>
     </nav>
     <button class="admin-btn" onclick="openAdmin()">🔐 Админ</button>
@@ -654,10 +760,10 @@ footer{
     <div class="hero-content">
         <div class="badge">PREMIUM AUTO • ALMATY</div>
         <h1>Өзіңе лайық <span>көлікті</span> тап.</h1>
-        <p>N1 CENTER — сапалы автокөліктер, ашық баға және кәсіби қызмет. Өзіңе ұнайтын көлікті таңда да, бізбен WhatsApp арқылы байланыс.</p>
+        <p>N1 CENTER — сапалы автокөліктер, ашық баға және кәсіби қызмет. Өзіңе ұнайтын көлікті таңда да, біздің орталыққа келіп көз жеткіз.</p>
         <div class="hero-buttons">
             <a href="#catalog" class="primary-btn">🚘 Көліктерді көру</a>
-            <a href="https://wa.me/77072351858" target="_blank" class="secondary-btn">WhatsApp →</a>
+            <a href="https://2gis.kz/almaty/geo/70000001089870702" target="_blank" class="secondary-btn">2GIS картасы →</a>
         </div>
     </div>
 </section>
@@ -701,17 +807,34 @@ footer{
     <div class="about-boxes">
         <div class="about-box"><b>🚘</b><span>Сапалы автомобильдер</span></div>
         <div class="about-box"><b>💰</b><span>Ашық баға</span></div>
-        <div class="about-box"><b>⚡</b><span>Жылдам байланыс</span></div>
+        <div class="about-box"><b>⚡</b><span>Жылдам қызмет</span></div>
         <div class="about-box"><b>🤝</b><span>Клиентке жеке көзқарас</span></div>
+    </div>
+</section>
+
+<!-- Отзывтар бөлімі -->
+<section class="section reviews-section" id="reviews">
+    <div class="section-head">
+        <p>КЛИЕНТТЕР ПІКІРІ</p>
+        <h2>Отзывтар</h2>
+    </div>
+    <div class="reviews-grid" id="reviewsContainer">
+        <div class="empty">Пікірлер жүктелуде...</div>
+    </div>
+
+    <div class="review-form">
+        <h3>💬 Пікір қалдыру</h3>
+        <input type="text" id="reviewAuthor" placeholder="Аты-жөніңіз...">
+        <textarea id="reviewText" placeholder="Өз пікіріңізді жазыңыз..."></textarea>
+        <button class="primary-btn" onclick="addReview()" style="width:100%;">Жіберу</button>
     </div>
 </section>
 
 <section class="section contact" id="contact">
     <h2>Көлік ұнады ма?</h2>
-    <p>Бізге WhatsApp арқылы жазыңыз немесе 2GIS арқылы келіңіз.</p>
+    <p>Бізге 2GIS арқылы келіңіз немесе хабарласыңыз.</p>
     <div class="contact-links">
-        <a href="https://wa.me/77072351858" target="_blank" class="primary-btn">🟢 WhatsApp-қа жазу</a>
-        <a href="https://2GIS.kz/almaty/geo/70000001089870702" target="_blank" class="secondary-btn">📍 2GIS картасы</a>
+        <a href="https://2GIS.kz/almaty/geo/70000001089870702" target="_blank" class="primary-btn">📍 2GIS картасы</a>
     </div>
 </section>
 
@@ -753,7 +876,6 @@ footer{
     </div>
 </div>
 
-<!-- Үлкен фото модалы -->
 <div class="image-modal" id="imageModal" onclick="closeImage()">
     <span class="image-close" onclick="closeImage()">×</span>
     <div class="image-modal-content" onclick="event.stopPropagation()">
@@ -769,11 +891,22 @@ footer{
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script>
-const WHATSAPP = "77072351858";
+// Заставканы жою анимациясы
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        if(splash){
+            splash.style.opacity = "0";
+            setTimeout(() => splash.remove(), 800);
+        }
+    }, 1200);
+});
+
 const ADMIN_PASSWORD = "7777";
 const IMGBB_API_KEY = "cf5ecae0db6b81363d9b8aca69a0c525";
 
 let cars = [];
+let reviews = [];
 const currentPhotoIndexes = {};
 let activeModalCarId = null;
 let activeModalPhotoIndex = 0;
@@ -812,16 +945,20 @@ function loadCars(){
             showCars();
             showAdminCars();
         },
-        error => {
-            console.error(error);
-            document.getElementById("cars").innerHTML = `
-                <div class="empty">
-                    <div style="font-size:55px">⚠️</div>
-                    <h3>Firebase қатесі</h3>
-                    <p style="margin-top:10px">Интернет қосылымын немесе баптауларды тексеріңіз.</p>
-                </div>
-            `;
-        }
+        error => console.error(error)
+    );
+}
+
+function loadReviews(){
+    db.collection("reviews").orderBy("createdAt","desc").onSnapshot(
+        snapshot => {
+            reviews = [];
+            snapshot.forEach(doc => {
+                reviews.push({ id: doc.id, ...doc.data() });
+            });
+            showReviews();
+        },
+        error => console.error(error)
     );
 }
 
@@ -838,38 +975,22 @@ function showCars(){
         return matchName && matchYear;
     });
 
-    if(sort === "cheap"){
-        filtered.sort((a,b) => priceNumber(a.price) - priceNumber(b.price));
-    }
-    if(sort === "expensive"){
-        filtered.sort((a,b) => priceNumber(b.price) - priceNumber(a.price));
-    }
-    if(sort === "new"){
-        filtered.sort((a,b) => Number(b.year || 0) - Number(a.year || 0));
-    }
+    if(sort === "cheap") filtered.sort((a,b) => priceNumber(a.price) - priceNumber(b.price));
+    if(sort === "expensive") filtered.sort((a,b) => priceNumber(b.price) - priceNumber(a.price));
+    if(sort === "new") filtered.sort((a,b) => Number(b.year || 0) - Number(a.year || 0));
 
     container.innerHTML = "";
     if(filtered.length === 0){
-        container.innerHTML = `
-            <div class="empty">
-                <div style="font-size:55px">🚘</div>
-                <h3>Қазір көлік жоқ</h3>
-                <p style="margin-top:8px">Админ панельден бірінші көлікті қосыңыз.</p>
-            </div>
-        `;
+        container.innerHTML = `<div class="empty"><h3>Қазір көлік жоқ</h3></div>`;
         return;
     }
 
     filtered.forEach(car => {
-        if(currentPhotoIndexes[car.id] === undefined) {
-            currentPhotoIndexes[car.id] = 0;
-        }
+        if(currentPhotoIndexes[car.id] === undefined) currentPhotoIndexes[car.id] = 0;
         let photoIndex = currentPhotoIndexes[car.id];
         const photos = car.photos && car.photos.length ? car.photos : ["https://via.placeholder.com/700x450?text=N1+CENTER"];
         if(photoIndex >= photos.length) photoIndex = 0;
         const currentPhoto = photos[photoIndex];
-
-        const message = encodeURIComponent("Сәлеметсіз бе! " + car.brand + " көлігі туралы ақпарат алғым келеді.");
         
         let dotsHtml = "";
         if(photos.length > 1){
@@ -886,7 +1007,6 @@ function showCars(){
                     <img src="${currentPhoto}" loading="lazy" onerror="this.src='https://via.placeholder.com/700x450?text=N1+CENTER'">
                     ${car.label ? `<div class="car-label">${car.label}</div>` : ""}
                     <button class="favorite" onclick="event.stopPropagation();toggleFavorite(this)">♡</button>
-                    
                     ${photos.length > 1 ? `
                         <button class="slide-btn prev-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', -1)">❮</button>
                         <button class="slide-btn next-btn" onclick="event.stopPropagation(); changePhoto('${car.id}', 1)">❯</button>
@@ -904,7 +1024,6 @@ function showCars(){
                     </div>
                     <div class="price">${car.price || ""}</div>
                     <div class="description">${car.description || ""}</div>
-                    <a class="whatsapp" href="https://wa.me/${WHATSAPP}?text=${message}" target="_blank">🟢 WhatsApp арқылы хабарласу</a>
                 </div>
             </div>
         `;
@@ -912,15 +1031,72 @@ function showCars(){
     document.getElementById("statCars").innerText = cars.length + "+";
 }
 
+function showReviews(){
+    const container = document.getElementById("reviewsContainer");
+    container.innerHTML = "";
+    if(reviews.length === 0){
+        container.innerHTML = `<div class="empty"><p>Әзірге пікірлер жоқ. Бірінші болып жазыңыз!</p></div>`;
+        return;
+    }
+    reviews.forEach(rev => {
+        container.innerHTML += `
+            <div class="review-card">
+                <div>
+                    <div class="review-author">${rev.author || "Қонақ"}</div>
+                    <div class="review-date">${rev.date || ""}</div>
+                    <div class="review-text" id="rev_${rev.id}">${rev.text || ""}</div>
+                </div>
+                <button class="read-more-btn" id="btn_${rev.id}" onclick="toggleReview('${rev.id}')">Толығырақ...</button>
+            </div>
+        `;
+    });
+}
+
+function toggleReview(id){
+    const textEl = document.getElementById("id" ? `rev_${id}` : "");
+    const btnEl = document.getElementById(`btn_${id}`);
+    if(textEl.classList.contains("expanded")){
+        textEl.classList.remove("expanded");
+        btnEl.innerText = "Толығырақ...";
+    } else {
+        textEl.classList.add("expanded");
+        btnEl.innerText = "Жасыру";
+    }
+}
+
+async function addReview(){
+    const author = document.getElementById("reviewAuthor").value.trim();
+    const text = document.getElementById("reviewText").value.trim();
+    if(!author || !text){
+        alert("Барлық өрістерді толтырыңыз!");
+        return;
+    }
+    const dateObj = new Date();
+    const dateStr = dateObj.toLocaleDateString() + " " + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+    try {
+        await db.collection("reviews").add({
+            author,
+            text,
+            date: dateStr,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById("reviewAuthor").value = "";
+        document.getElementById("reviewText").value = "";
+        alert("✅ Пікіріңіз сәтті қосылды!");
+    } catch(e){
+        console.error(e);
+        alert("Қате орын алды.");
+    }
+}
+
 function changePhoto(carId, direction){
     const car = cars.find(c => c.id === carId);
     if(!car || !car.photos || car.photos.length <= 1) return;
-    
     let idx = currentPhotoIndexes[carId] || 0;
     idx += direction;
     if(idx < 0) idx = car.photos.length - 1;
     if(idx >= car.photos.length) idx = 0;
-    
     currentPhotoIndexes[carId] = idx;
     showCars();
 }
@@ -990,7 +1166,6 @@ async function addCar(){
         const photoURLs = [];
         for(let i = 0; i < files.length; i++){
             button.innerText = `⏳ Фото ${i + 1}/${files.length} жүктелуде...`;
-            
             const formData = new FormData();
             formData.append("image", files[i]);
 
@@ -999,11 +1174,10 @@ async function addCar(){
                 body: formData
             });
             const result = await response.json();
-
             if(result.success){
                 photoURLs.push(result.data.url);
             } else {
-                throw new Error("Фотоны ImgBB-ге жүктеу сәтсіз аяқталды.");
+                throw new Error("Фотоны жүктеу сәтсіз аяқталды.");
             }
         }
 
@@ -1081,11 +1255,9 @@ function openImage(carId){
 function modalChangePhoto(direction){
     const car = cars.find(c => c.id === activeModalCarId);
     if(!car || !car.photos || car.photos.length <= 1) return;
-    
     activeModalPhotoIndex += direction;
     if(activeModalPhotoIndex < 0) activeModalPhotoIndex = car.photos.length - 1;
     if(activeModalPhotoIndex >= car.photos.length) activeModalPhotoIndex = 0;
-    
     updateModalImage();
 }
 
@@ -1096,7 +1268,6 @@ function updateModalImage(){
     const url = photos[activeModalPhotoIndex];
 
     document.getElementById("bigImage").src = url;
-    
     const downloadBtn = document.getElementById("downloadLink");
     downloadBtn.href = url;
     downloadBtn.setAttribute("download", (car.brand || "car") + "_" + (activeModalPhotoIndex + 1) + ".jpg");
@@ -1107,6 +1278,7 @@ function closeImage(){
 }
 
 loadCars();
+loadReviews();
 </script>
 </body>
 </html>
