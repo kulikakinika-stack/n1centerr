@@ -869,9 +869,15 @@ footer{
             <div class="full"><label>Сипаттамасы</label><textarea id="description" placeholder="Көлік туралы ақпарат..."></textarea></div>
         </div>
         <button class="publish" id="publishButton" onclick="addCar()">🚀 КӨЛІКТІ ЖАРИЯЛАУ</button>
+        
         <div class="admin-list">
             <h3>Сайттағы көліктер</h3>
             <div id="adminCars"></div>
+        </div>
+
+        <div class="admin-list">
+            <h3>💬 Сайттағы пікірлер (Отзывтар)</h3>
+            <div id="adminReviews"></div>
         </div>
     </div>
 </div>
@@ -957,6 +963,7 @@ function loadReviews(){
                 reviews.push({ id: doc.id, ...doc.data() });
             });
             showReviews();
+            showAdminReviews();
         },
         error => console.error(error)
     );
@@ -1052,8 +1059,40 @@ function showReviews(){
     });
 }
 
+function showAdminReviews(){
+    const container = document.getElementById("adminReviews");
+    if(!container) return;
+    container.innerHTML = "";
+    if(reviews.length === 0){
+        container.innerHTML = `<p style="color:#666; margin-top:15px;">Әзірге пікірлер жоқ.</p>`;
+        return;
+    }
+    reviews.forEach(rev => {
+        container.innerHTML += `
+            <div class="admin-item">
+                <div class="admin-item-info">
+                    <b style="color:#10b981">${rev.author || "Қонақ"}</b><br>
+                    <span style="color:#aaa; font-size:13px;">${rev.text || ""}</span>
+                </div>
+                <button class="delete" onclick="deleteReview('${rev.id}')">🗑️</button>
+            </div>
+        `;
+    });
+}
+
+async function deleteReview(id){
+    if(!confirm("Бұл пікірді өшіру керек пе?")) return;
+    try {
+        await db.collection("reviews").doc(id).delete();
+        alert("🗑️ Пікір өшірілді!");
+    } catch(error){
+        console.error(error);
+        alert("❌ Өшіру қатесі.");
+    }
+}
+
 function toggleReview(id){
-    const textEl = document.getElementById("id" ? `rev_${id}` : "");
+    const textEl = document.getElementById(`rev_${id}`);
     const btnEl = document.getElementById(`btn_${id}`);
     if(textEl.classList.contains("expanded")){
         textEl.classList.remove("expanded");
@@ -1115,6 +1154,7 @@ function openAdmin(){
     if(password === ADMIN_PASSWORD){
         document.getElementById("adminModal").style.display = "block";
         showAdminCars();
+        showAdminReviews();
     } else if(password !== null) {
         alert("❌ Пароль қате!");
     }
